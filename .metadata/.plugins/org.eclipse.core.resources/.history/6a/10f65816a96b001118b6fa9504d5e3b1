@@ -1,0 +1,55 @@
+package com.hexaware.patientinsurance.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
+
+import com.hexaware.patientinsurance.dto.Patient;
+import com.hexaware.patientinsurance.dto.PatientInsuranceDTO;
+import com.hexaware.patientinsurance.dto.PatientPatientInsuranceVO;
+import com.hexaware.patientinsurance.entity.PatientInsurance;
+import com.hexaware.patientinsurance.repository.PatientInsuranceRepository;
+
+public class PatientInsuranceServiceImp implements IPatientInsuranceService {
+
+	@Autowired
+	PatientInsuranceRepository repo;
+
+	@Autowired
+	RestTemplate restTemplate;
+	
+	@Override
+	public PatientInsurance addInsurance(PatientInsuranceDTO patientInsuranceDTO) {
+		
+		PatientInsurance patientInsurance = new PatientInsurance();
+		patientInsurance.getInsuranceId(PatientInsuranceDTO.getInsuranceId());
+		return null;
+	}
+
+	@Override
+	public PatientInsuranceDTO getById(int insuranceId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<PatientInsurance> getAllInsurance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Patient updatePatientByInsurance(Patient patient) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PatientPatientInsuranceVO getPatientAndInsurance(int insuranceId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

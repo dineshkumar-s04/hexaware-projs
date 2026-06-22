@@ -1,0 +1,97 @@
+package com.hexaware.careassist.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hexaware.careassist.dto.PaymentDTO;
+import com.hexaware.careassist.entity.Claim;
+import com.hexaware.careassist.entity.Payment;
+import com.hexaware.careassist.exception.ClaimNotFoundException;
+import com.hexaware.careassist.exception.PaymentNotFoundException;
+import com.hexaware.careassist.repository.ClaimRepository;
+import com.hexaware.careassist.repository.PaymentRepository;
+import com.hexaware.careassist.service.IPaymentService;
+
+@Service
+public class PaymentServiceImpl implements IPaymentService {
+
+	@Autowired
+	private PaymentRepository paymentRepository;
+
+	@Autowired
+	private ClaimRepository claimRepository;
+
+	@Override
+	public PaymentDTO processPayment(PaymentDTO paymentDTO) {
+
+		Claim claim = claimRepository.findById(paymentDTO.getClaimId())
+				.orElseThrow(() -> new ClaimNotFoundException("Claim not found with ID: " + paymentDTO.getClaimId()));
+
+		Payment payment = new Payment();
+
+		payment.setClaim(claim);
+		payment.setAmount(paymentDTO.getAmount());
+		payment.setPaymentDate(paymentDTO.getPaymentDate());
+		payment.setStatus(paymentDTO.getStatus());
+		payment.setTransactionRef(paymentDTO.getTransactionRef());
+
+		Payment savedPayment = paymentRepository.save(payment);
+
+		PaymentDTO dto = new PaymentDTO();
+
+		dto.setPaymentId(savedPayment.getPaymentId());
+		dto.setClaimId(savedPayment.getClaim().getClaimId());
+		dto.setAmount(savedPayment.getAmount());
+		dto.setPaymentDate(savedPayment.getPaymentDate());
+		dto.setStatus(savedPayment.getStatus());
+		dto.setTransactionRef(savedPayment.getTransactionRef());
+
+		return dto;
+	}
+
+	@Override
+	public PaymentDTO getPaymentById(Integer paymentId) {
+
+		Payment payment = paymentRepository.findById(paymentId)
+				.orElseThrow(() -> new PaymentNotFoundException("Payment not found with ID: " + paymentId));
+
+		PaymentDTO dto = new PaymentDTO();
+
+		dto.setPaymentId(payment.getPaymentId());
+		dto.setClaimId(payment.getClaim().getClaimId());
+		dto.setAmount(payment.getAmount());
+		dto.setPaymentDate(payment.getPaymentDate());
+		dto.setStatus(payment.getStatus());
+		dto.setTransactionRef(payment.getTransactionRef());
+
+		return dto;
+	}
+
+	@Override
+	public List<PaymentDTO> getAllPayments() {
+
+		List<Payment> payments = paymentRepository.findAll();
+
+		List<PaymentDTO> dtoList = new ArrayList<>();
+
+		for (Payment payment : payments) {
+
+			PaymentDTO dto = new PaymentDTO();
+
+			dto.setPaymentId(payment.getPaymentId());
+			dto.setClaimId(payment.getClaim().getClaimId());
+			dto.setAmount(payment.getAmount());
+			dto.setPaymentDate(payment.getPaymentDate());
+			dto.setStatus(payment.getStatus());
+			dto.setTransactionRef(payment.getTransactionRef());
+
+			dtoList.add(dto);
+		}
+
+		return dtoList;
+	}
+
+}

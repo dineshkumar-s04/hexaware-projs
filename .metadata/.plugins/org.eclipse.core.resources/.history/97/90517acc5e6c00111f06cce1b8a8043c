@@ -1,0 +1,5 @@
+package com.hexaware.careassist.service;
+
+public interface INotificationService {
+
+}

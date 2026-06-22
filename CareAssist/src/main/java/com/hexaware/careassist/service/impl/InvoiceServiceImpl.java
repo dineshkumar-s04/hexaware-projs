@@ -1,0 +1,172 @@
+package com.hexaware.careassist.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hexaware.careassist.dto.InvoiceDTO;
+import com.hexaware.careassist.entity.Invoice;
+import com.hexaware.careassist.entity.Patient;
+import com.hexaware.careassist.entity.Provider;
+import com.hexaware.careassist.exception.InvoiceNotFoundException;
+import com.hexaware.careassist.exception.PatientNotFoundException;
+import com.hexaware.careassist.exception.ProviderNotFoundException;
+import com.hexaware.careassist.repository.InvoiceRepository;
+import com.hexaware.careassist.repository.PatientRepository;
+import com.hexaware.careassist.repository.ProviderRepository;
+import com.hexaware.careassist.service.IInvoiceService;
+
+@Service
+public class InvoiceServiceImpl implements IInvoiceService {
+
+	@Autowired
+	private InvoiceRepository invoiceRepository;
+
+	@Autowired
+	private PatientRepository patientRepository;
+
+	@Autowired
+	private ProviderRepository providerRepository;
+
+	@Override
+	public InvoiceDTO generateInvoice(InvoiceDTO invoiceDTO) {
+
+		Patient patient = patientRepository.findById(invoiceDTO.getPatientId()).orElseThrow(
+				() -> new PatientNotFoundException("Patient not found with ID: " + invoiceDTO.getPatientId()));
+
+		Provider provider = providerRepository.findById(invoiceDTO.getProviderId()).orElseThrow(
+				() -> new ProviderNotFoundException("Provider not found with ID: " + invoiceDTO.getProviderId()));
+
+		Invoice invoice = new Invoice();
+
+		invoice.setInvoiceNumber(invoiceDTO.getInvoiceNumber());
+		invoice.setPatient(patient);
+		invoice.setProvider(provider);
+		invoice.setConsultationFee(invoiceDTO.getConsultationFee());
+		invoice.setDiagnosticTestFee(invoiceDTO.getDiagnosticTestFee());
+		invoice.setScanFee(invoiceDTO.getScanFee());
+		invoice.setMedicineFee(invoiceDTO.getMedicineFee());
+		invoice.setTax(invoiceDTO.getTax());
+		invoice.setTotalAmount(invoiceDTO.getTotalAmount());
+		invoice.setStatus(invoiceDTO.getStatus());
+		invoice.setInvoiceDate(invoiceDTO.getInvoiceDate());
+		invoice.setDueDate(invoiceDTO.getDueDate());
+
+		Invoice savedInvoice = invoiceRepository.save(invoice);
+
+		InvoiceDTO responseDTO = new InvoiceDTO();
+
+		responseDTO.setInvoiceId(savedInvoice.getInvoiceId());
+		responseDTO.setInvoiceNumber(savedInvoice.getInvoiceNumber());
+		responseDTO.setPatientId(savedInvoice.getPatient().getPatientId());
+		responseDTO.setProviderId(savedInvoice.getProvider().getProviderId());
+		responseDTO.setConsultationFee(savedInvoice.getConsultationFee());
+		responseDTO.setDiagnosticTestFee(savedInvoice.getDiagnosticTestFee());
+		responseDTO.setScanFee(savedInvoice.getScanFee());
+		responseDTO.setMedicineFee(savedInvoice.getMedicineFee());
+		responseDTO.setTax(savedInvoice.getTax());
+		responseDTO.setTotalAmount(savedInvoice.getTotalAmount());
+		responseDTO.setStatus(savedInvoice.getStatus());
+		responseDTO.setInvoiceDate(savedInvoice.getInvoiceDate());
+		responseDTO.setDueDate(savedInvoice.getDueDate());
+
+		return responseDTO;
+	}
+
+	@Override
+	public InvoiceDTO getInvoiceById(Integer invoiceId) {
+
+		Invoice invoice = invoiceRepository.findById(invoiceId)
+				.orElseThrow(() -> new InvoiceNotFoundException("Invoice not found with ID: " + invoiceId));
+
+		InvoiceDTO dto = new InvoiceDTO();
+
+		dto.setInvoiceId(invoice.getInvoiceId());
+		dto.setInvoiceNumber(invoice.getInvoiceNumber());
+		dto.setPatientId(invoice.getPatient().getPatientId());
+		dto.setProviderId(invoice.getProvider().getProviderId());
+		dto.setConsultationFee(invoice.getConsultationFee());
+		dto.setDiagnosticTestFee(invoice.getDiagnosticTestFee());
+		dto.setScanFee(invoice.getScanFee());
+		dto.setMedicineFee(invoice.getMedicineFee());
+		dto.setTax(invoice.getTax());
+		dto.setTotalAmount(invoice.getTotalAmount());
+		dto.setStatus(invoice.getStatus());
+		dto.setInvoiceDate(invoice.getInvoiceDate());
+		dto.setDueDate(invoice.getDueDate());
+
+		return dto;
+	}
+
+	@Override
+	public List<InvoiceDTO> getAllInvoices() {
+
+		List<Invoice> invoices = invoiceRepository.findAll();
+
+		List<InvoiceDTO> dtoList = new ArrayList<>();
+
+		for (Invoice invoice : invoices) {
+
+			InvoiceDTO dto = new InvoiceDTO();
+
+			dto.setInvoiceId(invoice.getInvoiceId());
+			dto.setInvoiceNumber(invoice.getInvoiceNumber());
+			dto.setPatientId(invoice.getPatient().getPatientId());
+			dto.setProviderId(invoice.getProvider().getProviderId());
+			dto.setConsultationFee(invoice.getConsultationFee());
+			dto.setDiagnosticTestFee(invoice.getDiagnosticTestFee());
+			dto.setScanFee(invoice.getScanFee());
+			dto.setMedicineFee(invoice.getMedicineFee());
+			dto.setTax(invoice.getTax());
+			dto.setTotalAmount(invoice.getTotalAmount());
+			dto.setStatus(invoice.getStatus());
+			dto.setInvoiceDate(invoice.getInvoiceDate());
+			dto.setDueDate(invoice.getDueDate());
+
+			dtoList.add(dto);
+		}
+
+		return dtoList;
+	}
+
+	@Override
+	public InvoiceDTO updateInvoiceStatus(Integer invoiceId, String status) {
+
+		Invoice invoice = invoiceRepository.findById(invoiceId)
+				.orElseThrow(() -> new InvoiceNotFoundException("Invoice not found with ID: " + invoiceId));
+
+		invoice.setStatus(status);
+
+		Invoice updatedInvoice = invoiceRepository.save(invoice);
+
+		InvoiceDTO dto = new InvoiceDTO();
+
+		dto.setInvoiceId(updatedInvoice.getInvoiceId());
+		dto.setInvoiceNumber(updatedInvoice.getInvoiceNumber());
+		dto.setPatientId(updatedInvoice.getPatient().getPatientId());
+		dto.setProviderId(updatedInvoice.getProvider().getProviderId());
+		dto.setConsultationFee(updatedInvoice.getConsultationFee());
+		dto.setDiagnosticTestFee(updatedInvoice.getDiagnosticTestFee());
+		dto.setScanFee(updatedInvoice.getScanFee());
+		dto.setMedicineFee(updatedInvoice.getMedicineFee());
+		dto.setTax(updatedInvoice.getTax());
+		dto.setTotalAmount(updatedInvoice.getTotalAmount());
+		dto.setStatus(updatedInvoice.getStatus());
+		dto.setInvoiceDate(updatedInvoice.getInvoiceDate());
+		dto.setDueDate(updatedInvoice.getDueDate());
+
+		return dto;
+	}
+
+	@Override
+	public void deleteInvoice(Integer invoiceId) {
+
+		Invoice invoice = invoiceRepository.findById(invoiceId)
+				.orElseThrow(() -> new InvoiceNotFoundException("Invoice not found with ID: " + invoiceId));
+
+		invoiceRepository.delete(invoice);
+	}
+
+}

@@ -1,0 +1,18 @@
+package com.hexaware.springrest.datajpa.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.hexaware.springrest.datajpa.entity.Patient;
+
+public interface PatientRepository extends JpaRepository<Patient, Integer> {
+
+	
+	
+	
+	public List<Patient> findByNameOrGender(String name, String gender);
+	
+
+	public List<Patient> findByAgeGreaterThan(double age);
+}

@@ -1,0 +1,26 @@
+package com.hexaware.springrest.datajpa.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.NativeQuery;
+
+import com.hexaware.springrest.datajpa.entity.Employee;
+import com.hexaware.springrest.datajpa.entity.Patient;
+
+public interface PatientRepository extends JpaRepository<Patient, Integer> {
+
+	
+	
+	
+	public List<Patient> findByNameOrPatientId(String name, int patient_id);
+	
+
+	public List<Patient> findByName(String name);
+	
+	public  List<Patient>  getGender(String gender);
+	
+	@NativeQuery("select * from Patients")
+	public  List<Patient>  getAllSQL();
+	
+}

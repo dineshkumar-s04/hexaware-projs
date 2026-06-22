@@ -1,0 +1,62 @@
+package com.hexaware.patient.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hexaware.patient.dto.PatientDTO;
+import com.hexaware.patient.entity.Patient;
+import com.hexaware.patient.repository.PatientRepository;
+
+@Service
+public class PatientService implements IPatientService {
+
+	@Autowired
+	PatientRepository repo;
+
+	@Override
+	public Patient addPatient(PatientDTO patientDTO) {
+		Patient patient = new Patient();
+
+		patient.setPid(patientDTO.getPid());
+		patient.setPname(patientDTO.getPname());
+		patient.setGender(patientDTO.getGender());
+
+		return repo.save(patient);
+
+	}
+
+	@Override
+	public PatientDTO getById(int pid) {
+
+		Patient patient = repo.findById(pid).orElse(new Patient());
+		
+		PatientDTO patientDTO = new PatientDTO();
+		
+		patient.setPid(patient.getPid());
+		patient.setPname(patient.getPname());
+		patient.setGender(patient.getGender());
+
+		return patientDTO;
+	}
+
+	@Override
+	public List<Patient> getAllPatients() {
+		
+		return repo.findAll();
+	}
+
+	@Override
+	public Patient updatePatient(PatientDTO patientDTO) {
+
+		Patient patient = new Patient(); 
+
+		patient.setPid(patientDTO.getPid());
+		patient.setPname(patientDTO.getPname());
+		patient.setGender(patientDTO.getGender());
+
+		return repo.save(patient);
+	}
+
+}

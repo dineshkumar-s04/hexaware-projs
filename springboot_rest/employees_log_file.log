@@ -1,0 +1,68 @@
+2026-06-16T12:25:59.823+05:30  INFO 8328 --- [springboot_rest] [main] c.h.s.rest.SpringbootRestApplication     : Starting SpringbootRestApplication using Java 21.0.6 with PID 8328 (D:\Hexaware_June_\springboot_rest\target\classes started by Dell in D:\Hexaware_June_\springboot_rest)
+2026-06-16T12:25:59.826+05:30  INFO 8328 --- [springboot_rest] [main] c.h.s.rest.SpringbootRestApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-06-16T12:26:00.613+05:30  INFO 8328 --- [springboot_rest] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-06-16T12:26:00.629+05:30  INFO 8328 --- [springboot_rest] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-16T12:26:00.639+05:30  INFO 8328 --- [springboot_rest] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-06-16T12:26:00.680+05:30  INFO 8328 --- [springboot_rest] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-16T12:26:00.681+05:30  INFO 8328 --- [springboot_rest] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 796 ms
+2026-06-16T12:26:00.737+05:30  INFO 8328 --- [springboot_rest] [main] c.h.s.r.c.EmployeeRestController         : Info List of Employees initialized
+2026-06-16T12:26:00.737+05:30 DEBUG 8328 --- [springboot_rest] [main] c.h.s.r.c.EmployeeRestController         : This is debug
+2026-06-16T12:26:00.737+05:30 ERROR 8328 --- [springboot_rest] [main] c.h.s.r.c.EmployeeRestController         : this is error
+2026-06-16T12:26:00.738+05:30 TRACE 8328 --- [springboot_rest] [main] c.h.s.r.c.EmployeeRestController         : this is trace
+2026-06-16T12:26:00.738+05:30  WARN 8328 --- [springboot_rest] [main] c.h.s.r.c.EmployeeRestController         : this is warning
+2026-06-16T12:26:01.047+05:30  INFO 8328 --- [springboot_rest] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-06-16T12:26:01.054+05:30  INFO 8328 --- [springboot_rest] [main] c.h.s.rest.SpringbootRestApplication     : Started SpringbootRestApplication in 1.668 seconds (process running for 2.288)
+2026-06-16T12:27:49.892+05:30  INFO 8328 --- [springboot_rest] [RMI TCP Connection(5)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-16T12:27:49.895+05:30  INFO 8328 --- [springboot_rest] [RMI TCP Connection(5)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-16T12:27:49.901+05:30  INFO 8328 --- [springboot_rest] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+[32m2026-06-16 12:27:51.977[0;39m [INFO] com.hexaware.springboot.rest.SpringbootRestApplication [main] Starting SpringbootRestApplication using Java 21.0.6 with PID 12396 (D:\Hexaware_June_\springboot_rest\target\classes started by Dell in D:\Hexaware_June_\springboot_rest)
+[32m2026-06-16 12:27:51.979[0;39m [INFO] com.hexaware.springboot.rest.SpringbootRestApplication [main] No active profile set, falling back to 1 default profile: "default"
+[32m2026-06-16 12:27:52.734[0;39m [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port 8080 (http)
+[32m2026-06-16 12:27:52.749[0;39m [INFO] org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+[32m2026-06-16 12:27:52.750[0;39m [INFO] org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/10.1.55]
+[32m2026-06-16 12:27:52.787[0;39m [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+[32m2026-06-16 12:27:52.788[0;39m [INFO] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 758 ms
+[32m2026-06-16 12:27:52.849[0;39m [INFO] com.hexaware.springboot.rest.controller.EmployeeRestController [main] Info List of Employees initialized
+[32m2026-06-16 12:27:52.850[0;39m [DEBUG] com.hexaware.springboot.rest.controller.EmployeeRestController [main] This is debug
+[32m2026-06-16 12:27:52.850[0;39m [ERROR] com.hexaware.springboot.rest.controller.EmployeeRestController [main] this is error
+[32m2026-06-16 12:27:52.850[0;39m [TRACE] com.hexaware.springboot.rest.controller.EmployeeRestController [main] this is trace
+[32m2026-06-16 12:27:52.850[0;39m [WARN] com.hexaware.springboot.rest.controller.EmployeeRestController [main] this is warning
+[32m2026-06-16 12:27:53.162[0;39m [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port 8080 (http) with context path '/'
+[32m2026-06-16 12:27:53.170[0;39m [INFO] com.hexaware.springboot.rest.SpringbootRestApplication [main] Started SpringbootRestApplication in 1.641 seconds (process running for 2.264)
+[32m2026-06-16 12:28:43.484[0;39m [INFO] org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(4)-127.0.0.1] Application shutdown requested.
+[32m2026-06-16 12:28:43.488[0;39m [INFO] org.springframework.boot.web.embedded.tomcat.GracefulShutdown [RMI TCP Connection(4)-127.0.0.1] Commencing graceful shutdown. Waiting for active requests to complete
+[32m2026-06-16 12:28:43.496[0;39m [INFO] org.springframework.boot.web.embedded.tomcat.GracefulShutdown [tomcat-shutdown] Graceful shutdown complete
+[INFO]  :  Starting SpringbootRestApplication using Java 21.0.6 with PID 3904 (D:\Hexaware_June_\springboot_rest\target\classes started by Dell in D:\Hexaware_June_\springboot_rest)
+[INFO]  :  No active profile set, falling back to 1 default profile: "default"
+[INFO]  :  Tomcat initialized with port 8080 (http)
+[INFO]  :  Starting service [Tomcat]
+[INFO]  :  Starting Servlet engine: [Apache Tomcat/10.1.55]
+[INFO]  :  Initializing Spring embedded WebApplicationContext
+[INFO]  :  Root WebApplicationContext: initialization completed in 873 ms
+[INFO]  :  Info List of Employees initialized
+[DEBUG]  :  This is debug
+[ERROR]  :  this is error
+[TRACE]  :  this is trace
+[WARN]  :  this is warning
+[INFO]  :  Tomcat started on port 8080 (http) with context path '/'
+[INFO]  :  Started SpringbootRestApplication in 1.77 seconds (process running for 2.361)
+[INFO]  :  Application shutdown requested.
+[INFO]  :  Commencing graceful shutdown. Waiting for active requests to complete
+[INFO]  :  Graceful shutdown complete
+[INFO]  :  Starting SpringbootRestApplication using Java 21.0.6 with PID 18360 (D:\Hexaware_June_\springboot_rest\target\classes started by Dell in D:\Hexaware_June_\springboot_rest)
+[INFO]  :  No active profile set, falling back to 1 default profile: "default"
+[INFO]  :  Tomcat initialized with port 8080 (http)
+[INFO]  :  Starting service [Tomcat]
+[INFO]  :  Starting Servlet engine: [Apache Tomcat/10.1.55]
+[INFO]  :  Initializing Spring embedded WebApplicationContext
+[INFO]  :  Root WebApplicationContext: initialization completed in 875 ms
+[INFO]  :  Info List of Employees initialized
+[DEBUG]  :  This is debug
+[ERROR]  :  this is error
+[TRACE]  :  this is trace
+[WARN]  :  this is warning
+[INFO]  :  Tomcat started on port 8080 (http) with context path '/'
+[INFO]  :  Started SpringbootRestApplication in 1.746 seconds (process running for 2.356)
+[INFO]  :  Application shutdown requested.
+[INFO]  :  Commencing graceful shutdown. Waiting for active requests to complete
+[INFO]  :  Graceful shutdown complete

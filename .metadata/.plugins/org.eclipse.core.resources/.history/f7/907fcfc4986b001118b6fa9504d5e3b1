@@ -1,0 +1,9 @@
+package com.hexaware.patient.service;
+
+import com.hexaware.patient.entity.Patient;
+
+public interface IPatientService {
+
+	public Patient addPatient(PatientDTO, patientDTO );
+	
+}

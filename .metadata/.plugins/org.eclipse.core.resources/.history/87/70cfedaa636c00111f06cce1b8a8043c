@@ -1,0 +1,71 @@
+package com.hexaware.careassist.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hexaware.careassist.dto.UserDTO;
+import com.hexaware.careassist.entity.User;
+import com.hexaware.careassist.repository.UserRepository;
+import com.hexaware.careassist.service.IUserService;
+
+@Service
+public class UserServiceImpl implements IUserService {
+	
+	@Autowired
+    private UserRepository userRepository;
+
+	@Override
+	public UserDTO registerUser(UserDTO userDTO) {
+
+	    User user = new User();
+
+	    user.setName(userDTO.getName());
+	    user.setEmail(userDTO.getEmail());
+	    user.setPassword(userDTO.getPassword());
+	    user.setPhone(userDTO.getPhone());
+	    user.setRole(userDTO.getRole());
+	    user.setAccountStatus(userDTO.getAccountStatus());
+	    user.setProfilePic(userDTO.getProfilePic());
+
+	    User savedUser = userRepository.save(user);
+
+	    UserDTO responseDTO = new UserDTO();
+
+	    responseDTO.setUserId(savedUser.getUserId());
+	    responseDTO.setName(savedUser.getName());
+	    responseDTO.setEmail(savedUser.getEmail());
+	    responseDTO.setPassword(savedUser.getPassword());
+	    responseDTO.setPhone(savedUser.getPhone());
+	    responseDTO.setRole(savedUser.getRole());
+	    responseDTO.setAccountStatus(savedUser.getAccountStatus());
+	    responseDTO.setProfilePic(savedUser.getProfilePic());
+
+	    return responseDTO;
+	}
+
+	@Override
+	public UserDTO getUserById(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<UserDTO> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserDTO updateUser(Integer userId, UserDTO userDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteUser(Integer userId) {
+		// TODO Auto-generated method stub
+		
+	}
+}

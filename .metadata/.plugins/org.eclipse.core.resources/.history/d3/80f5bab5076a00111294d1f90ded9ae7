@@ -1,0 +1,108 @@
+package com.hexaware.springrest.datajpa.controller;
+
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hexaware.springrest.datajpa.PatientDTO;
+import com.hexaware.springrest.datajpa.entity.Patient;
+import com.hexaware.springrest.datajpa.service.IPatientService;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@RestController
+@RequestMapping("api/patients")
+@Slf4j
+@AllArgsConstructor
+public class PatientRestController {
+
+	
+	
+		IPatientService service;
+		
+		static {
+		log.info("Info List of Employees initialized");
+		log.debug("This is debug");
+		log.error("this is error");
+		log.trace("this is trace");
+		log.warn("this is warning");
+		}
+		
+		
+		@PostMapping("/add")
+		public Patient createPatient(@RequestBody PatientDTO dto) {
+
+			return service.addPatient(dto);
+
+		}
+
+		@PutMapping("/update")
+		public Patient updateEmployee(@RequestBody PatientDTO dto) {
+
+			return service.updatePatient(dto);
+
+		}
+
+		@GetMapping("/getbypid/{patient_id}")
+		public PatientDTO getPatientByPatient_id(@PathVariable int patient_id) {
+
+			return service.getByPid(patient_id);
+
+		}
+		
+		
+		@GetMapping("/getall")
+		public List<Patient>  getAll(){
+			
+			
+				return service.getAllPatients();
+			
+		}
+		
+		
+		@DeleteMapping("/deletebypid/{patient_id}")
+		public   ResponseEntity<String>   deleteByEid( @PathVariable  int patient_id){
+			
+				
+					service.deleteByPid(patient_id);
+			
+					return  new  ResponseEntity<String>("Record Deleted successfully", HttpStatus.ACCEPTED);
+			
+			
+		}
+		
+		@GetMapping("/search/{name}/{patient_id}")
+		public List<Patient> getNameOrPid(@PathVariable String name, @PathVariable int patient_id){
+			return service.findByNameOrPatientId(name, patient_id);
+		}
+		
+		@GetMapping("/search/{name}")
+		public List<Patient> getName(@PathVariable String name){
+			return service.findByName(name);
+		}
+		
+		
+		@GetMapping("/searchgender/{gender}")
+		public List<Patient> getGender(@PathVariable String gender){
+			return service.getGender(gender);	
+			
+		}
+		
+		@GetMapping("/searchall")
+		public List<Patient> getAllSQL(){
+			return service.getAllSQL();	
+			
+		}
+		
+		
+}

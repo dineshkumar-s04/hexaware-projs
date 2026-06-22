@@ -1,0 +1,11 @@
+package com.hexaware.careassist.dto;
+
+public class PasswordResetTokenDTO {
+
+	
+	private int tokenId;
+	private int userId;
+	private String token;
+	private LocalDateTime expiryTime;
+	private boolean used;
+}

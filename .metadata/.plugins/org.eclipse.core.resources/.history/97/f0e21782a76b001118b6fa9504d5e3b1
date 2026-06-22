@@ -1,0 +1,5 @@
+package com.hexaware.patientinsurance.repository;
+
+public interface PatientInsurance {
+
+}

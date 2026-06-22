@@ -1,0 +1,14 @@
+package com.hexaware.springrest.datajpa;
+
+public class PatientDTO {
+	
+	
+	private int patientId;
+	private String name;
+	private String gender;
+	
+	
+	
+	
+
+}

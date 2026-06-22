@@ -1,0 +1,46 @@
+package com.hexaware.patientinsurance.service;
+
+import java.util.List;
+
+import com.hexaware.patientinsurance.dto.Patient;
+import com.hexaware.patientinsurance.dto.PatientInsuranceDTO;
+import com.hexaware.patientinsurance.dto.PatientPatientInsuranceVO;
+import com.hexaware.patientinsurance.entity.PatientInsurance;
+
+public class PatientInsuranceServiceImp implements IPatientInsuranceService {
+
+	@Override
+	public PatientInsurance addInsurance(PatientInsuranceDTO patientInsuranceDTO) {
+		
+		PatientInsurance patientInsurance = new PatientInsurance();
+		
+		patientInsurance.setInsuranceId(PatientInsuranceDTO.getInsuranceId());
+		
+		return null;
+	}
+
+	@Override
+	public PatientInsuranceDTO getById(int insuranceId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<PatientInsurance> getAllInsurance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Patient updatePatientByInsurance(Patient patient) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PatientPatientInsuranceVO getPatientAndInsurance(int insuranceId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,17 @@
+package com.hexaware.patientinsurance.service;
+
+import java.util.List;
+
+import com.hexaware.patientinsurance.dto.Patient;
+import com.hexaware.patientinsurance.dto.PatientInsuranceDTO;
+import com.hexaware.patientinsurance.dto.PatientPatientInsuranceVO;
+import com.hexaware.patientinsurance.entity.PatientInsurance;
+
+public interface IPatientInsuranceService {
+
+	public PatientInsurance addInsurance(PatientInsuranceDTO patientInsuranceDTO );
+	public PatientInsuranceDTO getById(int insuranceId);
+	public List<PatientInsurance> getAllInsurance();
+	public Patient updatePatientByInsurance(Patient patient);
+	public PatientPatientInsuranceVO getPatientAndInsurance(int insuranceId);
+}

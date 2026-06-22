@@ -1,0 +1,80 @@
+2026-06-17T10:22:29.013+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] c.h.s.d.SpringRestPatientjpaApplication  : Starting SpringRestPatientjpaApplication using Java 23.0.2 with PID 15020 (E:\Software\sts-5.1.1.RELEASE\ProjFiles\spring_rest_patientjpa\target\classes started by ADMIN in E:\Software\sts-5.1.1.RELEASE\ProjFiles\spring_rest_patientjpa)
+2026-06-17T10:22:29.015+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] c.h.s.d.SpringRestPatientjpaApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T10:22:29.845+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-17T10:22:29.916+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 59 ms. Found 1 JPA repository interface.
+2026-06-17T10:22:30.451+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-06-17T10:22:30.471+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T10:22:30.472+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-06-17T10:22:30.546+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-17T10:22:30.546+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1462 ms
+2026-06-17T10:22:30.782+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-17T10:22:30.881+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-06-17T10:22:30.936+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-17T10:22:31.328+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-17T10:22:31.372+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-17T10:22:31.956+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@342a1f84
+2026-06-17T10:22:31.960+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-17T10:22:32.038+05:30  WARN 15020 --- [spring_rest_patientjpa] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-17T10:22:32.063+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.40
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-17T10:22:33.164+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-17T10:22:33.549+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-17T10:22:33.937+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-17T10:22:33.957+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] c.h.s.d.c.PatientRestController          : Info List of Patients initialized
+2026-06-17T10:22:33.958+05:30 ERROR 15020 --- [spring_rest_patientjpa] [main] c.h.s.d.c.PatientRestController          : this is error
+2026-06-17T10:22:33.958+05:30  WARN 15020 --- [spring_rest_patientjpa] [main] c.h.s.d.c.PatientRestController          : this is warning
+2026-06-17T10:22:34.001+05:30  WARN 15020 --- [spring_rest_patientjpa] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-17T10:22:34.464+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T10:22:34.473+05:30  INFO 15020 --- [spring_rest_patientjpa] [main] c.h.s.d.SpringRestPatientjpaApplication  : Started SpringRestPatientjpaApplication in 6.064 seconds (process running for 7.01)
+2026-06-17T10:23:50.111+05:30  INFO 15020 --- [spring_rest_patientjpa] [RMI TCP Connection(5)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-17T10:23:50.113+05:30  INFO 15020 --- [spring_rest_patientjpa] [RMI TCP Connection(5)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T10:23:50.121+05:30  INFO 15020 --- [spring_rest_patientjpa] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-06-17T10:23:50.125+05:30  INFO 15020 --- [spring_rest_patientjpa] [RMI TCP Connection(5)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-17T10:23:50.128+05:30  INFO 15020 --- [spring_rest_patientjpa] [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-17T10:23:50.139+05:30  INFO 15020 --- [spring_rest_patientjpa] [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+[32m2026-06-17 10:23:52.805[0;39m [INFO] com.hexaware.springrest.datajpa.SpringRestPatientjpaApplication [main] Starting SpringRestPatientjpaApplication using Java 23.0.2 with PID 12728 (E:\Software\sts-5.1.1.RELEASE\ProjFiles\spring_rest_patientjpa\target\classes started by ADMIN in E:\Software\sts-5.1.1.RELEASE\ProjFiles\spring_rest_patientjpa)
+[32m2026-06-17 10:23:52.807[0;39m [INFO] com.hexaware.springrest.datajpa.SpringRestPatientjpaApplication [main] No active profile set, falling back to 1 default profile: "default"
+[32m2026-06-17 10:23:53.672[0;39m [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[32m2026-06-17 10:23:53.738[0;39m [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 55 ms. Found 1 JPA repository interface.
+[32m2026-06-17 10:23:54.228[0;39m [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port 8080 (http)
+[32m2026-06-17 10:23:54.245[0;39m [INFO] org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+[32m2026-06-17 10:23:54.246[0;39m [INFO] org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/10.1.55]
+[32m2026-06-17 10:23:54.306[0;39m [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+[32m2026-06-17 10:23:54.306[0;39m [INFO] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1420 ms
+[32m2026-06-17 10:23:54.489[0;39m [INFO] org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+[32m2026-06-17 10:23:54.541[0;39m [INFO] org.hibernate.Version [main] HHH000412: Hibernate ORM core version 6.6.53.Final
+[32m2026-06-17 10:23:54.576[0;39m [INFO] org.hibernate.cache.internal.RegionFactoryInitiator [main] HHH000026: Second-level cache disabled
+[32m2026-06-17 10:23:54.896[0;39m [INFO] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [main] No LoadTimeWeaver setup: ignoring JPA class transformer
+[32m2026-06-17 10:23:54.928[0;39m [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+[32m2026-06-17 10:23:55.331[0;39m [INFO] com.zaxxer.hikari.pool.HikariPool [main] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3fc1abf
+[32m2026-06-17 10:23:55.334[0;39m [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+[32m2026-06-17 10:23:55.395[0;39m [WARN] org.hibernate.orm.deprecation [main] HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+[32m2026-06-17 10:23:55.420[0;39m [INFO] org.hibernate.orm.connections.pooling [main] HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.40
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+[32m2026-06-17 10:23:56.258[0;39m [INFO] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[32m2026-06-17 10:23:56.597[0;39m [INFO] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[32m2026-06-17 10:23:56.945[0;39m [INFO] org.springframework.data.jpa.repository.query.QueryEnhancerFactory [main] Hibernate is in classpath; If applicable, HQL parser will be used.
+[32m2026-06-17 10:23:56.961[0;39m [INFO] com.hexaware.springrest.datajpa.controller.PatientRestController [main] Info List of Patients initialized
+[32m2026-06-17 10:23:56.961[0;39m [ERROR] com.hexaware.springrest.datajpa.controller.PatientRestController [main] this is error
+[32m2026-06-17 10:23:56.961[0;39m [WARN] com.hexaware.springrest.datajpa.controller.PatientRestController [main] this is warning
+[32m2026-06-17 10:23:57.004[0;39m [WARN] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[32m2026-06-17 10:23:57.432[0;39m [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port 8080 (http) with context path '/'
+[32m2026-06-17 10:23:57.440[0;39m [INFO] com.hexaware.springrest.datajpa.SpringRestPatientjpaApplication [main] Started SpringRestPatientjpaApplication in 5.216 seconds (process running for 5.989)
+[32m2026-06-17 11:10:36.746[0;39m [INFO] org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(50)-127.0.0.1] Application shutdown requested.
+[32m2026-06-17 11:10:36.937[0;39m [INFO] org.springframework.boot.web.embedded.tomcat.GracefulShutdown [RMI TCP Connection(50)-127.0.0.1] Commencing graceful shutdown. Waiting for active requests to complete
+[32m2026-06-17 11:10:36.995[0;39m [INFO] org.springframework.boot.web.embedded.tomcat.GracefulShutdown [tomcat-shutdown] Graceful shutdown complete
+[32m2026-06-17 11:10:37.046[0;39m [INFO] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [RMI TCP Connection(50)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
+[32m2026-06-17 11:10:37.116[0;39m [INFO] com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(50)-127.0.0.1] HikariPool-1 - Shutdown initiated...
+[32m2026-06-17 11:10:37.145[0;39m [INFO] com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(50)-127.0.0.1] HikariPool-1 - Shutdown completed.

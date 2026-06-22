@@ -1,0 +1,70 @@
+package com.hexaware.springrest.datajpa.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hexaware.springrest.datajpa.PatientDTO;
+import com.hexaware.springrest.datajpa.entity.Patient;
+import com.hexaware.springrest.datajpa.repository.PatientRepository;
+
+
+
+@Service
+public class PatientServiceImp implements IPatientService {
+	
+	
+	@Autowired
+	PatientRepository repo;
+
+	@Override
+	public Patient addPatient(PatientDTO dto) {
+		
+		Patient  pat = new Patient();
+		
+		pat.setPatient_id(dto.getPatient_id());
+		pat.setName(dto.getName());
+		pat.setGender(dto.getGender());
+		
+		return repo.save(pat);
+	}
+
+	@Override
+	public Patient updatePatient(PatientDTO dto) {
+		
+		Patient  pat = new Patient();
+		pat.setPatient_id(dto.getPatient_id());
+		pat.setName(dto.getName());
+		pat.setGender(dto.getGender());
+		
+		return repo.save(pat);
+	}
+
+	@Override
+	public PatientDTO getByPid(int patient_id) {
+		Patient pat = repo.findById(patient_id).orElse(null);
+		
+		
+		PatientDTO dto = new PatientDTO();
+				dto.setPatient_id(pat.getPatient_id());
+				dto.setName(pat.getName());
+				dto.setGender(pat.getGender());
+				
+				
+		return dto;		
+	}
+
+	@Override
+	public void deleteByPid(int patient_id) {
+
+		repo.deleteById(patient_id);
+	}
+
+	@Override
+	public List<Patient> getAllPatients() {
+		
+		return repo.findAll();
+	}
+
+}

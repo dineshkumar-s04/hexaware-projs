@@ -1,0 +1,108 @@
+package com.hexaware.springrest.datajpa.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hexaware.springrest.datajpa.PatientDTO;
+import com.hexaware.springrest.datajpa.entity.Patient;
+import com.hexaware.springrest.datajpa.repository.PatientRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Slf4j
+public class PatientServiceImp implements IPatientService {
+
+	@Autowired
+	PatientRepository repo;
+
+	@Override
+	public Patient addPatient(PatientDTO dto) {
+
+		log.info("Adding patient");
+		
+		Patient pat = new Patient();   
+		
+		//By using lombok 
+
+		dto.getPatientId();
+		dto.getName();
+		dto.getGender();
+
+		return repo.save(pat);
+	}
+
+	@Override
+	public Patient updatePatient(PatientDTO dto) {
+
+		Patient pat = new Patient();
+		
+		log.info("Updating patient");
+		
+		// WIthout using lombok / using setter
+		
+		pat.setPatientId(dto.getPatientId());
+		pat.setName(dto.getName());
+		pat.setGender(dto.getGender());
+
+		return repo.save(pat);
+	}
+
+	@Override
+	public PatientDTO getByPid(int patient_id) {
+		
+		
+		Patient pat = repo.findById(patientId).orElse(null);
+
+	    if (pat == null) {
+	        return null;
+	    }
+
+	    return new PatientDTO(
+	            pat.getPatientId(),
+	            pat.getName(),
+	            pat.getGender());
+	}
+
+	@Override
+	public void deleteByPid(int patient_id) {
+
+		repo.deleteById(patient_id);
+	}
+
+	@Override
+	public List<Patient> getAllPatients() {
+
+		
+		log.info("Display all patient");
+		
+		return repo.findAll();
+	}
+
+	@Override
+	public List<Patient> findByNameOrPatientId(String name, int patient_id) {
+
+		return repo.findByNameOrPatientId(name, patient_id);
+	}
+
+	@Override
+	public List<Patient> findByName(String name) {
+
+		return repo.findByName(name);
+	}
+
+	@Override
+	public List<Patient> getGender(String gender) {
+		
+		return repo.getGender(gender);
+	}
+
+	@Override
+	public List<Patient> getAllSQL() {
+		
+		return repo.getAllSQL();
+	}
+
+}

@@ -1,0 +1,16 @@
+package com.hexaware.careassist.dto;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+public class PatientInsuranceDTO {
+
+	
+	private int enrollmentId;
+	private int patientId;
+	private int planId;
+	private LocalDate enrollmentDate;
+	private LocalDate expiryDate;
+	private BigDecimal coverageUsed;
+	private String status;
+}
