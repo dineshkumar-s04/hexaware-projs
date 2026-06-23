@@ -1,5 +1,0 @@
-package com.hexaware.springrest.datajpa.entity;
-
-public class Patient {
-
-}

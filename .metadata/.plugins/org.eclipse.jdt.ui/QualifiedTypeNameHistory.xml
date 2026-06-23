@@ -36,4 +36,6 @@
     <fullyQualifiedTypeName name="lombok.ToString"/>
     <fullyQualifiedTypeName name="com.hexaware.careassist.exception.ProviderNotFoundException"/>
     <fullyQualifiedTypeName name="com.hexaware.careassist.entity.Provider"/>
+    <fullyQualifiedTypeName name="com.hexaware.careassist.entity.User"/>
+    <fullyQualifiedTypeName name="com.hexaware.careassist.entity.Notification"/>
 </qualifiedTypeNameHistroy>
