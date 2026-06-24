@@ -8845,3 +8845,4 @@ org.eclipse.core.runtime.CoreException: Could not resolve artifact org.webjars:s
 2026-06-23 20:43:54,308 [Worker-25: Launching Executing test in E__Software_sts-5.1.1.RELEASE_ProjFiles_CareAssist] INFO  o.eclipse.m2e.core.internal.Bundles - 	Entry: E:\Software\sts-5.1.1.RELEASE\plugins\com.google.guava.failureaccess_1.0.3.jar
 2026-06-23 20:43:54,317 [Worker-25: Launching Executing test in E__Software_sts-5.1.1.RELEASE_ProjFiles_CareAssist] INFO  o.e.m.i.launch.MavenLaunchDelegate - Run build in "E:\Software\sts-5.1.1.RELEASE\ProjFiles\CareAssist":
 2026-06-23 20:43:54,318 [Worker-25: Launching Executing test in E__Software_sts-5.1.1.RELEASE_ProjFiles_CareAssist] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn  -Ppom.xml -B -Dstyle.color=always test
+2026-06-24 08:57:41,528 [Worker-5: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
