@@ -15,127 +15,121 @@ import com.hexaware.cricketmanagement.service.IPlayerService;
 @Service
 public class PlayerServiceImpl implements IPlayerService {
 
-    @Autowired
-    private PlayerRepository playerRepository;
+	@Autowired
+	private PlayerRepository playerRepository;
 
-    @Override
-    public PlayerDTO addPlayer(PlayerDTO playerDTO) {
+	@Override
+	public PlayerDTO addPlayer(PlayerDTO playerDTO) {
 
-        Player player = new Player();
+		Player player = new Player();
 
-        player.setPlayerId(playerDTO.getPlayerId());
-        player.setPlayerName(playerDTO.getPlayerName());
-        player.setJerseyNumber(playerDTO.getJerseyNumber());
-        player.setRole(playerDTO.getRole());
-        player.setTotalMatches(playerDTO.getTotalMatches());
-        player.setTeamName(playerDTO.getTeamName());
-        player.setCountryStateName(playerDTO.getCountryStateName());
-        player.setDescription(playerDTO.getDescription());
+		player.setPlayerId(playerDTO.getPlayerId());
+		player.setPlayerName(playerDTO.getPlayerName());
+		player.setJerseyNumber(playerDTO.getJerseyNumber());
+		player.setRole(playerDTO.getRole());
+		player.setTotalMatches(playerDTO.getTotalMatches());
+		player.setTeamName(playerDTO.getTeamName());
+		player.setCountryStateName(playerDTO.getCountryStateName());
+		player.setDescription(playerDTO.getDescription());
 
-        Player savedPlayer = playerRepository.save(player);
+		Player savedPlayer = playerRepository.save(player);
 
-        PlayerDTO responseDTO = new PlayerDTO();
+		PlayerDTO responseDTO = new PlayerDTO();
 
-        responseDTO.setPlayerId(savedPlayer.getPlayerId());
-        responseDTO.setPlayerName(savedPlayer.getPlayerName());
-        responseDTO.setJerseyNumber(savedPlayer.getJerseyNumber());
-        responseDTO.setRole(savedPlayer.getRole());
-        responseDTO.setTotalMatches(savedPlayer.getTotalMatches());
-        responseDTO.setTeamName(savedPlayer.getTeamName());
-        responseDTO.setCountryStateName(savedPlayer.getCountryStateName());
-        responseDTO.setDescription(savedPlayer.getDescription());
+		responseDTO.setPlayerId(savedPlayer.getPlayerId());
+		responseDTO.setPlayerName(savedPlayer.getPlayerName());
+		responseDTO.setJerseyNumber(savedPlayer.getJerseyNumber());
+		responseDTO.setRole(savedPlayer.getRole());
+		responseDTO.setTotalMatches(savedPlayer.getTotalMatches());
+		responseDTO.setTeamName(savedPlayer.getTeamName());
+		responseDTO.setCountryStateName(savedPlayer.getCountryStateName());
+		responseDTO.setDescription(savedPlayer.getDescription());
 
-        return responseDTO;
-    }
+		return responseDTO;
+	}
 
-    @Override
-    public PlayerDTO getPlayerById(Integer playerId) {
+	@Override
+	public PlayerDTO getPlayerById(Integer playerId) {
 
-        Player player = playerRepository.findById(playerId)
-                .orElseThrow(() ->
-                        new PlayerNotFoundException(
-                                "Player not found with ID: " + playerId));
+		Player player = playerRepository.findById(playerId)
+				.orElseThrow(() -> new PlayerNotFoundException("Player not found with ID: " + playerId));
 
-        PlayerDTO playerDTO = new PlayerDTO();
+		PlayerDTO playerDTO = new PlayerDTO();
 
-        playerDTO.setPlayerId(player.getPlayerId());
-        playerDTO.setPlayerName(player.getPlayerName());
-        playerDTO.setJerseyNumber(player.getJerseyNumber());
-        playerDTO.setRole(player.getRole());
-        playerDTO.setTotalMatches(player.getTotalMatches());
-        playerDTO.setTeamName(player.getTeamName());
-        playerDTO.setCountryStateName(player.getCountryStateName());
-        playerDTO.setDescription(player.getDescription());
+		playerDTO.setPlayerId(player.getPlayerId());
+		playerDTO.setPlayerName(player.getPlayerName());
+		playerDTO.setJerseyNumber(player.getJerseyNumber());
+		playerDTO.setRole(player.getRole());
+		playerDTO.setTotalMatches(player.getTotalMatches());
+		playerDTO.setTeamName(player.getTeamName());
+		playerDTO.setCountryStateName(player.getCountryStateName());
+		playerDTO.setDescription(player.getDescription());
 
-        return playerDTO;
-    }
+		return playerDTO;
+	}
 
-    @Override
-    public List<PlayerDTO> getAllPlayers() {
+	@Override
+	public List<PlayerDTO> getAllPlayers() {
 
-        List<Player> players = playerRepository.findAll();
+		List<Player> players = playerRepository.findAll();
 
-        List<PlayerDTO> playerDTOList = new ArrayList<>();
+		List<PlayerDTO> playerDTOList = new ArrayList<>();
 
-        for (Player player : players) {
+		for (Player player : players) {
 
-            PlayerDTO playerDTO = new PlayerDTO();
+			PlayerDTO playerDTO = new PlayerDTO();
 
-            playerDTO.setPlayerId(player.getPlayerId());
-            playerDTO.setPlayerName(player.getPlayerName());
-            playerDTO.setJerseyNumber(player.getJerseyNumber());
-            playerDTO.setRole(player.getRole());
-            playerDTO.setTotalMatches(player.getTotalMatches());
-            playerDTO.setTeamName(player.getTeamName());
-            playerDTO.setCountryStateName(player.getCountryStateName());
-            playerDTO.setDescription(player.getDescription());
+			playerDTO.setPlayerId(player.getPlayerId());
+			playerDTO.setPlayerName(player.getPlayerName());
+			playerDTO.setJerseyNumber(player.getJerseyNumber());
+			playerDTO.setRole(player.getRole());
+			playerDTO.setTotalMatches(player.getTotalMatches());
+			playerDTO.setTeamName(player.getTeamName());
+			playerDTO.setCountryStateName(player.getCountryStateName());
+			playerDTO.setDescription(player.getDescription());
 
-            playerDTOList.add(playerDTO);
-        }
+			playerDTOList.add(playerDTO);
+		}
 
-        return playerDTOList;
-    }
+		return playerDTOList;
+	}
 
-    @Override
-    public PlayerDTO updatePlayer(Integer playerId, PlayerDTO playerDTO) {
+	@Override
+	public PlayerDTO updatePlayer(Integer playerId, PlayerDTO playerDTO) {
 
-        Player player = playerRepository.findById(playerId)
-                .orElseThrow(() ->
-                        new PlayerNotFoundException(
-                                "Player not found with ID: " + playerId));
+		Player player = playerRepository.findById(playerId)
+				.orElseThrow(() -> new PlayerNotFoundException("Player not found with ID: " + playerId));
 
-        player.setPlayerName(playerDTO.getPlayerName());
-        player.setJerseyNumber(playerDTO.getJerseyNumber());
-        player.setRole(playerDTO.getRole());
-        player.setTotalMatches(playerDTO.getTotalMatches());
-        player.setTeamName(playerDTO.getTeamName());
-        player.setCountryStateName(playerDTO.getCountryStateName());
-        player.setDescription(playerDTO.getDescription());
+		player.setPlayerName(playerDTO.getPlayerName());
+		player.setJerseyNumber(playerDTO.getJerseyNumber());
+		player.setRole(playerDTO.getRole());
+		player.setTotalMatches(playerDTO.getTotalMatches());
+		player.setTeamName(playerDTO.getTeamName());
+		player.setCountryStateName(playerDTO.getCountryStateName());
+		player.setDescription(playerDTO.getDescription());
 
-        Player updatedPlayer = playerRepository.save(player);
+		Player updatedPlayer = playerRepository.save(player);
 
-        PlayerDTO responseDTO = new PlayerDTO();
+		PlayerDTO responseDTO = new PlayerDTO();
 
-        responseDTO.setPlayerId(updatedPlayer.getPlayerId());
-        responseDTO.setPlayerName(updatedPlayer.getPlayerName());
-        responseDTO.setJerseyNumber(updatedPlayer.getJerseyNumber());
-        responseDTO.setRole(updatedPlayer.getRole());
-        responseDTO.setTotalMatches(updatedPlayer.getTotalMatches());
-        responseDTO.setTeamName(updatedPlayer.getTeamName());
-        responseDTO.setCountryStateName(updatedPlayer.getCountryStateName());
-        responseDTO.setDescription(updatedPlayer.getDescription());
+		responseDTO.setPlayerId(updatedPlayer.getPlayerId());
+		responseDTO.setPlayerName(updatedPlayer.getPlayerName());
+		responseDTO.setJerseyNumber(updatedPlayer.getJerseyNumber());
+		responseDTO.setRole(updatedPlayer.getRole());
+		responseDTO.setTotalMatches(updatedPlayer.getTotalMatches());
+		responseDTO.setTeamName(updatedPlayer.getTeamName());
+		responseDTO.setCountryStateName(updatedPlayer.getCountryStateName());
+		responseDTO.setDescription(updatedPlayer.getDescription());
 
-        return responseDTO;
-    }
+		return responseDTO;
+	}
 
-    @Override
-    public void deletePlayer(Integer playerId) {
+	@Override
+	public void deletePlayer(Integer playerId) {
 
-        Player player = playerRepository.findById(playerId)
-                .orElseThrow(() ->
-                        new PlayerNotFoundException(
-                                "Player not found with ID: " + playerId));
+		Player player = playerRepository.findById(playerId)
+				.orElseThrow(() -> new PlayerNotFoundException("Player not found with ID: " + playerId));
 
-        playerRepository.delete(player);
-    }
+		playerRepository.delete(player);
+	}
 }

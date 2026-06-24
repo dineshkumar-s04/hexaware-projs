@@ -22,7 +22,6 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/players")
 @Validated
-@CrossOrigin(origins = "*")
 public class PlayerController {
 
 	@Autowired
