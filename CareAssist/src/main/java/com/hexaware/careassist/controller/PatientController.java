@@ -39,6 +39,15 @@ public class PatientController {
 
 		return ResponseEntity.ok(patient);
 	}
+	
+	@GetMapping("/email/{email}")
+	public ResponseEntity<PatientDTO> getPatientByEmail(
+	        @PathVariable String email) {
+
+	    PatientDTO patient = patientService.getPatientByEmail(email);
+
+	    return ResponseEntity.ok(patient);
+	}
 
 	@GetMapping
 	public ResponseEntity<List<PatientDTO>> getAllPatients() {

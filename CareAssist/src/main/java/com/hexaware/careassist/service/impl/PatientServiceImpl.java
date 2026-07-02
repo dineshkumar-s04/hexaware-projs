@@ -41,7 +41,7 @@ public class PatientServiceImpl implements IPatientService {
 		});
 
 		Patient patient = new Patient();
-
+		
 		patient.setUser(user);
 		patient.setDob(patientDTO.getDob());
 		patient.setGender(patientDTO.getGender());
@@ -178,5 +178,42 @@ public class PatientServiceImpl implements IPatientService {
 		patientRepository.delete(patient);
 
 		logger.info("Patient deleted successfully with id {}", patientId);
+	}
+
+	@Override
+	public PatientDTO getPatientByEmail(String email) {
+
+	    logger.info("Fetching patient using email {}", email);
+
+	    User user = userRepository.findByEmail(email)
+	            .orElseThrow(() -> {
+
+	                logger.warn("User not found with email {}", email);
+
+	                return new UserNotFoundException("User not found with email: " + email);
+	            });
+
+	    Patient patient = patientRepository.findByUserUserId(user.getUserId())
+	            .orElseThrow(() -> {
+
+	                logger.warn("Patient not found for user id {}", user.getUserId());
+
+	                return new PatientNotFoundException(
+	                        "Patient not found for user id: " + user.getUserId());
+	            });
+
+	    PatientDTO patientDTO = new PatientDTO();
+
+	    patientDTO.setPatientId(patient.getPatientId());
+	    patientDTO.setUserId(patient.getUser().getUserId());
+	    patientDTO.setDob(patient.getDob());
+	    patientDTO.setGender(patient.getGender());
+	    patientDTO.setSymptoms(patient.getSymptoms());
+	    patientDTO.setTreatment(patient.getTreatment());
+	    patientDTO.setAddress(patient.getAddress());
+
+	    logger.info("Patient fetched successfully with id {}", patient.getPatientId());
+
+	    return patientDTO;
 	}
 }

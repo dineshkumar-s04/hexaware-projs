@@ -1,5 +1,7 @@
 package com.hexaware.careassist.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -7,5 +9,7 @@ import com.hexaware.careassist.entity.Patient;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
+
+    Optional<Patient> findByUserUserId(int userId);
 
 }

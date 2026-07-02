@@ -34,7 +34,6 @@
     <fullyQualifiedTypeName name="lombok.ToString"/>
     <fullyQualifiedTypeName name="com.hexaware.careassist.exception.ProviderNotFoundException"/>
     <fullyQualifiedTypeName name="com.hexaware.careassist.entity.Provider"/>
-    <fullyQualifiedTypeName name="com.hexaware.careassist.entity.User"/>
     <fullyQualifiedTypeName name="com.hexaware.careassist.entity.Notification"/>
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.JpaRepository"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
@@ -47,4 +46,5 @@
     <fullyQualifiedTypeName name="java.nio.charset.StandardCharsets"/>
     <fullyQualifiedTypeName name="java.util.Optional"/>
     <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.hexaware.careassist.entity.User"/>
 </qualifiedTypeNameHistroy>

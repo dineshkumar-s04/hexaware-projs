@@ -14,4 +14,6 @@ public interface IPatientService {
     PatientDTO updatePatient(Integer patientId, PatientDTO patientDTO);
 
     void deletePatient(Integer patientId);
+    
+    PatientDTO getPatientByEmail(String email);
 }
