@@ -3,6 +3,8 @@ package com.hexaware.careassist.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import com.hexaware.careassist.service.IPatientService;
 @Service
 public class PatientServiceImpl implements IPatientService {
 
+	private static final Logger logger = LoggerFactory.getLogger(PatientServiceImpl.class);
+
 	@Autowired
 	private PatientRepository patientRepository;
 
@@ -27,8 +31,14 @@ public class PatientServiceImpl implements IPatientService {
 	@Override
 	public PatientDTO registerPatient(PatientDTO patientDTO) {
 
-		User user = userRepository.findById(patientDTO.getUserId())
-				.orElseThrow(() -> new UserNotFoundException("User not found with ID: " + patientDTO.getUserId()));
+		logger.info("Registering patient for user id {}", patientDTO.getUserId());
+
+		User user = userRepository.findById(patientDTO.getUserId()).orElseThrow(() -> {
+
+			logger.warn("User not found with id {}", patientDTO.getUserId());
+
+			return new UserNotFoundException("User not found with ID: " + patientDTO.getUserId());
+		});
 
 		Patient patient = new Patient();
 
@@ -40,6 +50,8 @@ public class PatientServiceImpl implements IPatientService {
 		patient.setAddress(patientDTO.getAddress());
 
 		Patient savedPatient = patientRepository.save(patient);
+
+		logger.info("Patient registered successfully with id {}", savedPatient.getPatientId());
 
 		PatientDTO responseDTO = new PatientDTO();
 
@@ -57,8 +69,14 @@ public class PatientServiceImpl implements IPatientService {
 	@Override
 	public PatientDTO getPatientById(Integer patientId) {
 
-		Patient patient = patientRepository.findById(patientId)
-				.orElseThrow(() -> new PatientNotFoundException("Patient not found with ID: " + patientId));
+		logger.info("Fetching patient with id {}", patientId);
+
+		Patient patient = patientRepository.findById(patientId).orElseThrow(() -> {
+
+			logger.warn("Patient not found with id {}", patientId);
+
+			return new PatientNotFoundException("Patient not found with ID: " + patientId);
+		});
 
 		PatientDTO patientDTO = new PatientDTO();
 
@@ -75,6 +93,8 @@ public class PatientServiceImpl implements IPatientService {
 
 	@Override
 	public List<PatientDTO> getAllPatients() {
+
+		logger.info("Fetching all patients");
 
 		List<Patient> patients = patientRepository.findAll();
 
@@ -95,17 +115,29 @@ public class PatientServiceImpl implements IPatientService {
 			patientDTOList.add(patientDTO);
 		}
 
+		logger.info("Total patients fetched: {}", patientDTOList.size());
+
 		return patientDTOList;
 	}
 
 	@Override
 	public PatientDTO updatePatient(Integer patientId, PatientDTO patientDTO) {
 
-		Patient patient = patientRepository.findById(patientId)
-				.orElseThrow(() -> new PatientNotFoundException("Patient not found with ID: " + patientId));
+		logger.info("Updating patient with id {}", patientId);
 
-		User user = userRepository.findById(patientDTO.getUserId())
-				.orElseThrow(() -> new UserNotFoundException("User not found with ID: " + patientDTO.getUserId()));
+		Patient patient = patientRepository.findById(patientId).orElseThrow(() -> {
+
+			logger.warn("Patient not found with id {}", patientId);
+
+			return new PatientNotFoundException("Patient not found with ID: " + patientId);
+		});
+
+		User user = userRepository.findById(patientDTO.getUserId()).orElseThrow(() -> {
+
+			logger.warn("User not found with id {}", patientDTO.getUserId());
+
+			return new UserNotFoundException("User not found with ID: " + patientDTO.getUserId());
+		});
 
 		patient.setUser(user);
 		patient.setDob(patientDTO.getDob());
@@ -115,6 +147,8 @@ public class PatientServiceImpl implements IPatientService {
 		patient.setAddress(patientDTO.getAddress());
 
 		Patient updatedPatient = patientRepository.save(patient);
+
+		logger.info("Patient updated successfully with id {}", updatedPatient.getPatientId());
 
 		PatientDTO responseDTO = new PatientDTO();
 
@@ -132,10 +166,17 @@ public class PatientServiceImpl implements IPatientService {
 	@Override
 	public void deletePatient(Integer patientId) {
 
-		Patient patient = patientRepository.findById(patientId)
-				.orElseThrow(() -> new PatientNotFoundException("Patient not found with ID: " + patientId));
+		logger.info("Deleting patient with id {}", patientId);
+
+		Patient patient = patientRepository.findById(patientId).orElseThrow(() -> {
+
+			logger.warn("Patient not found with id {}", patientId);
+
+			return new PatientNotFoundException("Patient not found with ID: " + patientId);
+		});
 
 		patientRepository.delete(patient);
-	}
 
+		logger.info("Patient deleted successfully with id {}", patientId);
+	}
 }

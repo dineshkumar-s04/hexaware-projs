@@ -43,6 +43,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="E:\Hexaware_June_26\hexaware_june_2026\React_Notes_Demos\ReactSpringBootFullstack_integration_files\spring-boot-data-jpa-mysql-master"/>
 			<item value="E:\Hexaware_June_26\hexaware_june_2026\spring-oauth2.0_demo_notes\spring-oauth2.0"/>
 			<item value="E:\Hexaware_June_26\hexaware_june_2026\springsecurity_jwt_demo_notes\spring-security-3.0-bcrypt"/>
 			<item value="E:\Hexaware_June_26\hexaware_june_2026\SpringSecurity_Part2\springsecuritybasic_with_database"/>

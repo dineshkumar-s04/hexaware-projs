@@ -3,6 +3,8 @@ package com.hexaware.careassist.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import com.hexaware.careassist.service.IInsurancePlanService;
 @Service
 public class InsurancePlanServiceImpl implements IInsurancePlanService {
 
+	private static final Logger logger = LoggerFactory.getLogger(InsurancePlanServiceImpl.class);
+
 	@Autowired
 	private InsurancePlanRepository insurancePlanRepository;
 
@@ -27,9 +31,15 @@ public class InsurancePlanServiceImpl implements IInsurancePlanService {
 	@Override
 	public InsurancePlanDTO addPlan(InsurancePlanDTO planDTO) {
 
-		InsuranceCompany company = insuranceCompanyRepository.findById(planDTO.getCompanyId())
-				.orElseThrow(() -> new InsuranceCompanyNotFoundException(
-						"Insurance Company not found with ID: " + planDTO.getCompanyId()));
+		logger.info("Adding insurance plan for company id {}", planDTO.getCompanyId());
+
+		InsuranceCompany company = insuranceCompanyRepository.findById(planDTO.getCompanyId()).orElseThrow(() -> {
+
+			logger.warn("Insurance company not found with id {}", planDTO.getCompanyId());
+
+			return new InsuranceCompanyNotFoundException(
+					"Insurance Company not found with ID: " + planDTO.getCompanyId());
+		});
 
 		InsurancePlan plan = new InsurancePlan();
 
@@ -40,6 +50,8 @@ public class InsurancePlanServiceImpl implements IInsurancePlanService {
 		plan.setDescription(planDTO.getDescription());
 
 		InsurancePlan savedPlan = insurancePlanRepository.save(plan);
+
+		logger.info("Insurance plan added successfully with id {}", savedPlan.getPlanId());
 
 		InsurancePlanDTO responseDTO = new InsurancePlanDTO();
 
@@ -56,8 +68,14 @@ public class InsurancePlanServiceImpl implements IInsurancePlanService {
 	@Override
 	public InsurancePlanDTO getPlanById(Integer planId) {
 
-		InsurancePlan plan = insurancePlanRepository.findById(planId)
-				.orElseThrow(() -> new InsurancePlanNotFoundException("Insurance Plan not found with ID: " + planId));
+		logger.info("Fetching insurance plan with id {}", planId);
+
+		InsurancePlan plan = insurancePlanRepository.findById(planId).orElseThrow(() -> {
+
+			logger.warn("Insurance plan not found with id {}", planId);
+
+			return new InsurancePlanNotFoundException("Insurance Plan not found with ID: " + planId);
+		});
 
 		InsurancePlanDTO planDTO = new InsurancePlanDTO();
 
@@ -73,6 +91,8 @@ public class InsurancePlanServiceImpl implements IInsurancePlanService {
 
 	@Override
 	public List<InsurancePlanDTO> getAllPlans() {
+
+		logger.info("Fetching all insurance plans");
 
 		List<InsurancePlan> plans = insurancePlanRepository.findAll();
 
@@ -92,18 +112,30 @@ public class InsurancePlanServiceImpl implements IInsurancePlanService {
 			planDTOList.add(planDTO);
 		}
 
+		logger.info("Total insurance plans fetched: {}", planDTOList.size());
+
 		return planDTOList;
 	}
 
 	@Override
 	public InsurancePlanDTO updatePlan(Integer planId, InsurancePlanDTO planDTO) {
 
-		InsurancePlan plan = insurancePlanRepository.findById(planId)
-				.orElseThrow(() -> new InsurancePlanNotFoundException("Insurance Plan not found with ID: " + planId));
+		logger.info("Updating insurance plan with id {}", planId);
 
-		InsuranceCompany company = insuranceCompanyRepository.findById(planDTO.getCompanyId())
-				.orElseThrow(() -> new InsuranceCompanyNotFoundException(
-						"Insurance Company not found with ID: " + planDTO.getCompanyId()));
+		InsurancePlan plan = insurancePlanRepository.findById(planId).orElseThrow(() -> {
+
+			logger.warn("Insurance plan not found with id {}", planId);
+
+			return new InsurancePlanNotFoundException("Insurance Plan not found with ID: " + planId);
+		});
+
+		InsuranceCompany company = insuranceCompanyRepository.findById(planDTO.getCompanyId()).orElseThrow(() -> {
+
+			logger.warn("Insurance company not found with id {}", planDTO.getCompanyId());
+
+			return new InsuranceCompanyNotFoundException(
+					"Insurance Company not found with ID: " + planDTO.getCompanyId());
+		});
 
 		plan.setCompany(company);
 		plan.setPlanName(planDTO.getPlanName());
@@ -112,6 +144,8 @@ public class InsurancePlanServiceImpl implements IInsurancePlanService {
 		plan.setDescription(planDTO.getDescription());
 
 		InsurancePlan updatedPlan = insurancePlanRepository.save(plan);
+
+		logger.info("Insurance plan updated successfully with id {}", updatedPlan.getPlanId());
 
 		InsurancePlanDTO responseDTO = new InsurancePlanDTO();
 
@@ -128,10 +162,17 @@ public class InsurancePlanServiceImpl implements IInsurancePlanService {
 	@Override
 	public void deletePlan(Integer planId) {
 
-		InsurancePlan plan = insurancePlanRepository.findById(planId)
-				.orElseThrow(() -> new InsurancePlanNotFoundException("Insurance Plan not found with ID: " + planId));
+		logger.info("Deleting insurance plan with id {}", planId);
+
+		InsurancePlan plan = insurancePlanRepository.findById(planId).orElseThrow(() -> {
+
+			logger.warn("Insurance plan not found with id {}", planId);
+
+			return new InsurancePlanNotFoundException("Insurance Plan not found with ID: " + planId);
+		});
 
 		insurancePlanRepository.delete(plan);
-	}
 
+		logger.info("Insurance plan deleted successfully with id {}", planId);
+	}
 }

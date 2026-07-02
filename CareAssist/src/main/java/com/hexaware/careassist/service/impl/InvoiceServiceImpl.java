@@ -3,6 +3,8 @@ package com.hexaware.careassist.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import com.hexaware.careassist.service.IInvoiceService;
 @Service
 public class InvoiceServiceImpl implements IInvoiceService {
 
+	private static final Logger logger = LoggerFactory.getLogger(InvoiceServiceImpl.class);
+
 	@Autowired
 	private InvoiceRepository invoiceRepository;
 
@@ -33,11 +37,22 @@ public class InvoiceServiceImpl implements IInvoiceService {
 	@Override
 	public InvoiceDTO generateInvoice(InvoiceDTO invoiceDTO) {
 
-		Patient patient = patientRepository.findById(invoiceDTO.getPatientId()).orElseThrow(
-				() -> new PatientNotFoundException("Patient not found with ID: " + invoiceDTO.getPatientId()));
+		logger.info("Generating invoice for patient id {} and provider id {}", invoiceDTO.getPatientId(),
+				invoiceDTO.getProviderId());
 
-		Provider provider = providerRepository.findById(invoiceDTO.getProviderId()).orElseThrow(
-				() -> new ProviderNotFoundException("Provider not found with ID: " + invoiceDTO.getProviderId()));
+		Patient patient = patientRepository.findById(invoiceDTO.getPatientId()).orElseThrow(() -> {
+
+			logger.warn("Patient not found with id {}", invoiceDTO.getPatientId());
+
+			return new PatientNotFoundException("Patient not found with ID: " + invoiceDTO.getPatientId());
+		});
+
+		Provider provider = providerRepository.findById(invoiceDTO.getProviderId()).orElseThrow(() -> {
+
+			logger.warn("Provider not found with id {}", invoiceDTO.getProviderId());
+
+			return new ProviderNotFoundException("Provider not found with ID: " + invoiceDTO.getProviderId());
+		});
 
 		Invoice invoice = new Invoice();
 
@@ -55,6 +70,8 @@ public class InvoiceServiceImpl implements IInvoiceService {
 		invoice.setDueDate(invoiceDTO.getDueDate());
 
 		Invoice savedInvoice = invoiceRepository.save(invoice);
+
+		logger.info("Invoice generated successfully with id {}", savedInvoice.getInvoiceId());
 
 		InvoiceDTO responseDTO = new InvoiceDTO();
 
@@ -78,8 +95,14 @@ public class InvoiceServiceImpl implements IInvoiceService {
 	@Override
 	public InvoiceDTO getInvoiceById(Integer invoiceId) {
 
-		Invoice invoice = invoiceRepository.findById(invoiceId)
-				.orElseThrow(() -> new InvoiceNotFoundException("Invoice not found with ID: " + invoiceId));
+		logger.info("Fetching invoice with id {}", invoiceId);
+
+		Invoice invoice = invoiceRepository.findById(invoiceId).orElseThrow(() -> {
+
+			logger.warn("Invoice not found with id {}", invoiceId);
+
+			return new InvoiceNotFoundException("Invoice not found with ID: " + invoiceId);
+		});
 
 		InvoiceDTO dto = new InvoiceDTO();
 
@@ -102,6 +125,8 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
 	@Override
 	public List<InvoiceDTO> getAllInvoices() {
+
+		logger.info("Fetching all invoices");
 
 		List<Invoice> invoices = invoiceRepository.findAll();
 
@@ -128,18 +153,28 @@ public class InvoiceServiceImpl implements IInvoiceService {
 			dtoList.add(dto);
 		}
 
+		logger.info("Total invoices fetched: {}", dtoList.size());
+
 		return dtoList;
 	}
 
 	@Override
 	public InvoiceDTO updateInvoiceStatus(Integer invoiceId, String status) {
 
-		Invoice invoice = invoiceRepository.findById(invoiceId)
-				.orElseThrow(() -> new InvoiceNotFoundException("Invoice not found with ID: " + invoiceId));
+		logger.info("Updating invoice status for invoice id {}", invoiceId);
+
+		Invoice invoice = invoiceRepository.findById(invoiceId).orElseThrow(() -> {
+
+			logger.warn("Invoice not found with id {}", invoiceId);
+
+			return new InvoiceNotFoundException("Invoice not found with ID: " + invoiceId);
+		});
 
 		invoice.setStatus(status);
 
 		Invoice updatedInvoice = invoiceRepository.save(invoice);
+
+		logger.info("Invoice status updated successfully for invoice id {}", updatedInvoice.getInvoiceId());
 
 		InvoiceDTO dto = new InvoiceDTO();
 
@@ -163,10 +198,17 @@ public class InvoiceServiceImpl implements IInvoiceService {
 	@Override
 	public void deleteInvoice(Integer invoiceId) {
 
-		Invoice invoice = invoiceRepository.findById(invoiceId)
-				.orElseThrow(() -> new InvoiceNotFoundException("Invoice not found with ID: " + invoiceId));
+		logger.info("Deleting invoice with id {}", invoiceId);
+
+		Invoice invoice = invoiceRepository.findById(invoiceId).orElseThrow(() -> {
+
+			logger.warn("Invoice not found with id {}", invoiceId);
+
+			return new InvoiceNotFoundException("Invoice not found with ID: " + invoiceId);
+		});
 
 		invoiceRepository.delete(invoice);
-	}
 
+		logger.info("Invoice deleted successfully with id {}", invoiceId);
+	}
 }

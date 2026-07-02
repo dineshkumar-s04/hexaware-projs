@@ -1,6 +1,5 @@
 package com.hexaware.cricketmanagement.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -16,23 +15,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Player {
 
-    @Id
-    private Integer playerId;
+	@Id
+	private Integer playerId;
 
-    @Column(nullable = false)
-    private String playerName;
+	@Column(nullable = false)
+	private String playerName;
 
-    @Column(nullable = false)
-    private Integer jerseyNumber;
+	@Column(nullable = false)
+	private Integer jerseyNumber;
 
-    @Column(nullable = false)
-    private String role;
+	@Column(nullable = false)
+	private String role;
 
-    private Integer totalMatches;
+	private Integer totalMatches;
 
-    private String teamName;
+	private String teamName;
 
-    private String countryStateName;
+	private String countryStateName;
 
-    private String description;
+	private String description;
 }

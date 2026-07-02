@@ -3,6 +3,8 @@ package com.hexaware.careassist.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import com.hexaware.careassist.service.IPatientInsuranceService;
 @Service
 public class PatientInsuranceServiceImpl implements IPatientInsuranceService {
 
+	private static final Logger logger = LoggerFactory.getLogger(PatientInsuranceServiceImpl.class);
+
 	@Autowired
 	private PatientInsuranceRepository patientInsuranceRepository;
 
@@ -33,11 +37,21 @@ public class PatientInsuranceServiceImpl implements IPatientInsuranceService {
 	@Override
 	public PatientInsuranceDTO enrollPlan(PatientInsuranceDTO dto) {
 
-		Patient patient = patientRepository.findById(dto.getPatientId())
-				.orElseThrow(() -> new PatientNotFoundException("Patient not found with ID: " + dto.getPatientId()));
+		logger.info("Enrolling patient {} to insurance plan {}", dto.getPatientId(), dto.getPlanId());
 
-		InsurancePlan plan = insurancePlanRepository.findById(dto.getPlanId()).orElseThrow(
-				() -> new InsurancePlanNotFoundException("Insurance Plan not found with ID: " + dto.getPlanId()));
+		Patient patient = patientRepository.findById(dto.getPatientId()).orElseThrow(() -> {
+
+			logger.warn("Patient not found with id {}", dto.getPatientId());
+
+			return new PatientNotFoundException("Patient not found with ID: " + dto.getPatientId());
+		});
+
+		InsurancePlan plan = insurancePlanRepository.findById(dto.getPlanId()).orElseThrow(() -> {
+
+			logger.warn("Insurance plan not found with id {}", dto.getPlanId());
+
+			return new InsurancePlanNotFoundException("Insurance Plan not found with ID: " + dto.getPlanId());
+		});
 
 		PatientInsurance enrollment = new PatientInsurance();
 
@@ -49,6 +63,8 @@ public class PatientInsuranceServiceImpl implements IPatientInsuranceService {
 		enrollment.setStatus(dto.getStatus());
 
 		PatientInsurance savedEnrollment = patientInsuranceRepository.save(enrollment);
+
+		logger.info("Enrollment created successfully with id {}", savedEnrollment.getEnrollmentId());
 
 		PatientInsuranceDTO responseDTO = new PatientInsuranceDTO();
 
@@ -66,8 +82,14 @@ public class PatientInsuranceServiceImpl implements IPatientInsuranceService {
 	@Override
 	public PatientInsuranceDTO getEnrollmentById(Integer enrollmentId) {
 
-		PatientInsurance enrollment = patientInsuranceRepository.findById(enrollmentId).orElseThrow(
-				() -> new PatientInsuranceNotFoundException("Enrollment not found with ID: " + enrollmentId));
+		logger.info("Fetching enrollment with id {}", enrollmentId);
+
+		PatientInsurance enrollment = patientInsuranceRepository.findById(enrollmentId).orElseThrow(() -> {
+
+			logger.warn("Enrollment not found with id {}", enrollmentId);
+
+			return new PatientInsuranceNotFoundException("Enrollment not found with ID: " + enrollmentId);
+		});
 
 		PatientInsuranceDTO dto = new PatientInsuranceDTO();
 
@@ -84,6 +106,8 @@ public class PatientInsuranceServiceImpl implements IPatientInsuranceService {
 
 	@Override
 	public List<PatientInsuranceDTO> getAllEnrollments() {
+
+		logger.info("Fetching all enrollments");
 
 		List<PatientInsurance> enrollments = patientInsuranceRepository.findAll();
 
@@ -104,16 +128,25 @@ public class PatientInsuranceServiceImpl implements IPatientInsuranceService {
 			dtoList.add(dto);
 		}
 
+		logger.info("Total enrollments fetched: {}", dtoList.size());
+
 		return dtoList;
 	}
 
 	@Override
 	public void cancelEnrollment(Integer enrollmentId) {
 
-		PatientInsurance enrollment = patientInsuranceRepository.findById(enrollmentId).orElseThrow(
-				() -> new PatientInsuranceNotFoundException("Enrollment not found with ID: " + enrollmentId));
+		logger.info("Cancelling enrollment with id {}", enrollmentId);
+
+		PatientInsurance enrollment = patientInsuranceRepository.findById(enrollmentId).orElseThrow(() -> {
+
+			logger.warn("Enrollment not found with id {}", enrollmentId);
+
+			return new PatientInsuranceNotFoundException("Enrollment not found with ID: " + enrollmentId);
+		});
 
 		patientInsuranceRepository.delete(enrollment);
-	}
 
+		logger.info("Enrollment cancelled successfully with id {}", enrollmentId);
+	}
 }

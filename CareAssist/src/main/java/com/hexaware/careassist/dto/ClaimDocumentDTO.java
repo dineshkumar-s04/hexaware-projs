@@ -12,7 +12,6 @@ import lombok.Setter;
 public class ClaimDocumentDTO {
 
 	private int documentId;
-	private int claimId;
 	private String fileName;
 	private String filePath;
 }

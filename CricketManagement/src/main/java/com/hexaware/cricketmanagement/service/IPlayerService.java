@@ -5,7 +5,7 @@ import java.util.List;
 import com.hexaware.cricketmanagement.dto.PlayerDTO;
 
 public interface IPlayerService {
-	
+
 	PlayerDTO addPlayer(PlayerDTO playerDTO);
 
 	PlayerDTO getPlayerById(Integer playerId);
@@ -15,5 +15,6 @@ public interface IPlayerService {
 	PlayerDTO updatePlayer(Integer playerId, PlayerDTO playerDTO);
 
 	void deletePlayer(Integer playerId);
-	
+
+	List<String> getPlayerNamesByCountry(String countryStateName);
 }

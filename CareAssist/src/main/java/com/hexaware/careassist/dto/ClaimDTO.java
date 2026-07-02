@@ -2,6 +2,7 @@ package com.hexaware.careassist.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,4 +33,6 @@ public class ClaimDTO {
 
 	private LocalDate approvedDate;
 	private String rejectionReason;
+	
+	private List<ClaimDocumentDTO> documents;
 }

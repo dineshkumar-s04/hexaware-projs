@@ -3,6 +3,8 @@ package com.hexaware.careassist.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import com.hexaware.careassist.service.IProviderService;
 @Service
 public class ProviderServiceImpl implements IProviderService {
 
+	private static final Logger logger = LoggerFactory.getLogger(ProviderServiceImpl.class);
+
 	@Autowired
 	private ProviderRepository providerRepository;
 
@@ -27,8 +31,14 @@ public class ProviderServiceImpl implements IProviderService {
 	@Override
 	public ProviderDTO addProvider(ProviderDTO providerDTO) {
 
-		User user = userRepository.findById(providerDTO.getUserId())
-				.orElseThrow(() -> new UserNotFoundException("User not found with ID: " + providerDTO.getUserId()));
+		logger.info("Adding provider for user id {}", providerDTO.getUserId());
+
+		User user = userRepository.findById(providerDTO.getUserId()).orElseThrow(() -> {
+
+			logger.warn("User not found with id {}", providerDTO.getUserId());
+
+			return new UserNotFoundException("User not found with ID: " + providerDTO.getUserId());
+		});
 
 		Provider provider = new Provider();
 
@@ -39,6 +49,8 @@ public class ProviderServiceImpl implements IProviderService {
 		provider.setAddress(providerDTO.getAddress());
 
 		Provider savedProvider = providerRepository.save(provider);
+
+		logger.info("Provider added successfully with id {}", savedProvider.getProviderId());
 
 		ProviderDTO responseDTO = new ProviderDTO();
 
@@ -55,8 +67,14 @@ public class ProviderServiceImpl implements IProviderService {
 	@Override
 	public ProviderDTO getProviderById(Integer providerId) {
 
-		Provider provider = providerRepository.findById(providerId)
-				.orElseThrow(() -> new ProviderNotFoundException("Provider not found with ID: " + providerId));
+		logger.info("Fetching provider with id {}", providerId);
+
+		Provider provider = providerRepository.findById(providerId).orElseThrow(() -> {
+
+			logger.warn("Provider not found with id {}", providerId);
+
+			return new ProviderNotFoundException("Provider not found with ID: " + providerId);
+		});
 
 		ProviderDTO providerDTO = new ProviderDTO();
 
@@ -72,6 +90,8 @@ public class ProviderServiceImpl implements IProviderService {
 
 	@Override
 	public List<ProviderDTO> getAllProviders() {
+
+		logger.info("Fetching all providers");
 
 		List<Provider> providers = providerRepository.findAll();
 
@@ -91,17 +111,29 @@ public class ProviderServiceImpl implements IProviderService {
 			providerDTOList.add(providerDTO);
 		}
 
+		logger.info("Total providers fetched: {}", providerDTOList.size());
+
 		return providerDTOList;
 	}
 
 	@Override
 	public ProviderDTO updateProvider(Integer providerId, ProviderDTO providerDTO) {
 
-		Provider provider = providerRepository.findById(providerId)
-				.orElseThrow(() -> new ProviderNotFoundException("Provider not found with ID: " + providerId));
+		logger.info("Updating provider with id {}", providerId);
 
-		User user = userRepository.findById(providerDTO.getUserId())
-				.orElseThrow(() -> new UserNotFoundException("User not found with ID: " + providerDTO.getUserId()));
+		Provider provider = providerRepository.findById(providerId).orElseThrow(() -> {
+
+			logger.warn("Provider not found with id {}", providerId);
+
+			return new ProviderNotFoundException("Provider not found with ID: " + providerId);
+		});
+
+		User user = userRepository.findById(providerDTO.getUserId()).orElseThrow(() -> {
+
+			logger.warn("User not found with id {}", providerDTO.getUserId());
+
+			return new UserNotFoundException("User not found with ID: " + providerDTO.getUserId());
+		});
 
 		provider.setUser(user);
 		provider.setHospitalName(providerDTO.getHospitalName());
@@ -110,6 +142,8 @@ public class ProviderServiceImpl implements IProviderService {
 		provider.setAddress(providerDTO.getAddress());
 
 		Provider updatedProvider = providerRepository.save(provider);
+
+		logger.info("Provider updated successfully with id {}", updatedProvider.getProviderId());
 
 		ProviderDTO responseDTO = new ProviderDTO();
 
@@ -126,9 +160,17 @@ public class ProviderServiceImpl implements IProviderService {
 	@Override
 	public void deleteProvider(Integer providerId) {
 
-		Provider provider = providerRepository.findById(providerId)
-				.orElseThrow(() -> new ProviderNotFoundException("Provider not found with ID: " + providerId));
+		logger.info("Deleting provider with id {}", providerId);
+
+		Provider provider = providerRepository.findById(providerId).orElseThrow(() -> {
+
+			logger.warn("Provider not found with id {}", providerId);
+
+			return new ProviderNotFoundException("Provider not found with ID: " + providerId);
+		});
 
 		providerRepository.delete(provider);
+
+		logger.info("Provider deleted successfully with id {}", providerId);
 	}
 }

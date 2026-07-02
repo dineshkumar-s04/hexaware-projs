@@ -132,4 +132,18 @@ public class PlayerServiceImpl implements IPlayerService {
 
 		playerRepository.delete(player);
 	}
+
+	@Override
+	public List<String> getPlayerNamesByCountry(String countryStateName) {
+
+		List<Player> players = playerRepository.findByCountryStateName(countryStateName);
+
+		List<String> playerNames = new ArrayList<>();
+
+		for (Player player : players) {
+			playerNames.add(player.getPlayerName());
+		}
+
+		return playerNames;
+	}
 }

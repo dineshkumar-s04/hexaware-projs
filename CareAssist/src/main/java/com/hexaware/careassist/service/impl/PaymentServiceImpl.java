@@ -3,6 +3,8 @@ package com.hexaware.careassist.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import com.hexaware.careassist.service.IPaymentService;
 @Service
 public class PaymentServiceImpl implements IPaymentService {
 
+	private static final Logger logger = LoggerFactory.getLogger(PaymentServiceImpl.class);
+
 	@Autowired
 	private PaymentRepository paymentRepository;
 
@@ -27,8 +31,14 @@ public class PaymentServiceImpl implements IPaymentService {
 	@Override
 	public PaymentDTO processPayment(PaymentDTO paymentDTO) {
 
-		Claim claim = claimRepository.findById(paymentDTO.getClaimId())
-				.orElseThrow(() -> new ClaimNotFoundException("Claim not found with ID: " + paymentDTO.getClaimId()));
+		logger.info("Processing payment for claim id {}", paymentDTO.getClaimId());
+
+		Claim claim = claimRepository.findById(paymentDTO.getClaimId()).orElseThrow(() -> {
+
+			logger.warn("Claim not found with id {}", paymentDTO.getClaimId());
+
+			return new ClaimNotFoundException("Claim not found with ID: " + paymentDTO.getClaimId());
+		});
 
 		Payment payment = new Payment();
 
@@ -39,6 +49,8 @@ public class PaymentServiceImpl implements IPaymentService {
 		payment.setTransactionRef(paymentDTO.getTransactionRef());
 
 		Payment savedPayment = paymentRepository.save(payment);
+
+		logger.info("Payment processed successfully with id {}", savedPayment.getPaymentId());
 
 		PaymentDTO dto = new PaymentDTO();
 
@@ -55,8 +67,14 @@ public class PaymentServiceImpl implements IPaymentService {
 	@Override
 	public PaymentDTO getPaymentById(Integer paymentId) {
 
-		Payment payment = paymentRepository.findById(paymentId)
-				.orElseThrow(() -> new PaymentNotFoundException("Payment not found with ID: " + paymentId));
+		logger.info("Fetching payment with id {}", paymentId);
+
+		Payment payment = paymentRepository.findById(paymentId).orElseThrow(() -> {
+
+			logger.warn("Payment not found with id {}", paymentId);
+
+			return new PaymentNotFoundException("Payment not found with ID: " + paymentId);
+		});
 
 		PaymentDTO dto = new PaymentDTO();
 
@@ -72,6 +90,8 @@ public class PaymentServiceImpl implements IPaymentService {
 
 	@Override
 	public List<PaymentDTO> getAllPayments() {
+
+		logger.info("Fetching all payments");
 
 		List<Payment> payments = paymentRepository.findAll();
 
@@ -91,7 +111,8 @@ public class PaymentServiceImpl implements IPaymentService {
 			dtoList.add(dto);
 		}
 
+		logger.info("Total payments fetched: {}", dtoList.size());
+
 		return dtoList;
 	}
-
 }

@@ -1,9 +1,0 @@
-package com.hexaware.careassist.dto;
-
-public class ClaimDocumentDTO {
-
-	private int documentId;
-	private int claimId;
-	private String fileName;
-	private String filePath;
-}
