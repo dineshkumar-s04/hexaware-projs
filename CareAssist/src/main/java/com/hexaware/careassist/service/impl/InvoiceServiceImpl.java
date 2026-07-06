@@ -1,5 +1,6 @@
 package com.hexaware.careassist.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,16 +57,26 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
 		Invoice invoice = new Invoice();
 
-		invoice.setInvoiceNumber(invoiceDTO.getInvoiceNumber());
+		invoice.setInvoiceNumber("INV-" + System.currentTimeMillis());
 		invoice.setPatient(patient);
 		invoice.setProvider(provider);
 		invoice.setConsultationFee(invoiceDTO.getConsultationFee());
 		invoice.setDiagnosticTestFee(invoiceDTO.getDiagnosticTestFee());
 		invoice.setScanFee(invoiceDTO.getScanFee());
 		invoice.setMedicineFee(invoiceDTO.getMedicineFee());
-		invoice.setTax(invoiceDTO.getTax());
-		invoice.setTotalAmount(invoiceDTO.getTotalAmount());
-		invoice.setStatus(invoiceDTO.getStatus());
+
+		BigDecimal billAmount = invoiceDTO.getConsultationFee()
+		        .add(invoiceDTO.getDiagnosticTestFee())
+		        .add(invoiceDTO.getScanFee())
+		        .add(invoiceDTO.getMedicineFee());
+
+		BigDecimal tax = billAmount.multiply(new BigDecimal("0.08"));
+
+		BigDecimal totalAmount = billAmount.add(tax);
+
+		invoice.setTax(tax);
+		invoice.setTotalAmount(totalAmount);
+		invoice.setStatus("PENDING");
 		invoice.setInvoiceDate(invoiceDTO.getInvoiceDate());
 		invoice.setDueDate(invoiceDTO.getDueDate());
 
@@ -157,6 +168,42 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
 		return dtoList;
 	}
+	
+	@Override
+	public List<InvoiceDTO> getInvoicesByPatientId(Integer patientId) {
+
+	    logger.info("Fetching invoices for patient {}", patientId);
+
+	    List<Invoice> invoices =
+	            invoiceRepository.findByPatientPatientId(patientId);
+
+	    List<InvoiceDTO> dtoList = new ArrayList<>();
+
+	    for (Invoice invoice : invoices) {
+
+	        InvoiceDTO dto = new InvoiceDTO();
+
+	        dto.setInvoiceId(invoice.getInvoiceId());
+	        dto.setInvoiceNumber(invoice.getInvoiceNumber());
+	        dto.setPatientId(invoice.getPatient().getPatientId());
+	        dto.setProviderId(invoice.getProvider().getProviderId());
+	        dto.setConsultationFee(invoice.getConsultationFee());
+	        dto.setDiagnosticTestFee(invoice.getDiagnosticTestFee());
+	        dto.setScanFee(invoice.getScanFee());
+	        dto.setMedicineFee(invoice.getMedicineFee());
+	        dto.setTax(invoice.getTax());
+	        dto.setTotalAmount(invoice.getTotalAmount());
+	        dto.setStatus(invoice.getStatus());
+	        dto.setInvoiceDate(invoice.getInvoiceDate());
+	        dto.setDueDate(invoice.getDueDate());
+
+	        dtoList.add(dto);
+	    }
+
+	    logger.info("Total invoices found for patient {}: {}", patientId, dtoList.size());
+
+	    return dtoList;
+	}
 
 	@Override
 	public InvoiceDTO updateInvoiceStatus(Integer invoiceId, String status) {
@@ -193,6 +240,46 @@ public class InvoiceServiceImpl implements IInvoiceService {
 		dto.setDueDate(updatedInvoice.getDueDate());
 
 		return dto;
+	}
+	
+	@Override
+	public List<InvoiceDTO> getInvoicesByProviderId(Integer providerId) {
+
+	    logger.info("Fetching invoices for provider {}", providerId);
+
+	    List<Invoice> invoices =
+	            invoiceRepository.findByProviderProviderId(providerId);
+
+	    List<InvoiceDTO> dtoList = new ArrayList<>();
+
+	    for (Invoice invoice : invoices) {
+
+	        InvoiceDTO dto = new InvoiceDTO();
+
+	        dto.setInvoiceId(invoice.getInvoiceId());
+	        dto.setInvoiceNumber(invoice.getInvoiceNumber());
+	        dto.setPatientId(invoice.getPatient().getPatientId());
+	        dto.setProviderId(invoice.getProvider().getProviderId());
+	        dto.setConsultationFee(invoice.getConsultationFee());
+	        dto.setDiagnosticTestFee(invoice.getDiagnosticTestFee());
+	        dto.setScanFee(invoice.getScanFee());
+	        dto.setMedicineFee(invoice.getMedicineFee());
+	        dto.setTax(invoice.getTax());
+	        dto.setTotalAmount(invoice.getTotalAmount());
+	        dto.setStatus(invoice.getStatus());
+	        dto.setInvoiceDate(invoice.getInvoiceDate());
+	        dto.setDueDate(invoice.getDueDate());
+
+	        dtoList.add(dto);
+
+	    }
+
+	    logger.info("Total invoices found for provider {}: {}",
+	            providerId,
+	            dtoList.size());
+
+	    return dtoList;
+
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.hexaware.careassist.service.impl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,25 +105,7 @@ public class ClaimServiceImpl implements IClaimService {
 
 		logger.info("Claim submitted successfully with id {}", savedClaim.getClaimId());
 
-		ClaimDTO dto = new ClaimDTO();
-
-		dto.setClaimId(savedClaim.getClaimId());
-		dto.setPatientId(savedClaim.getPatient().getPatientId());
-		dto.setInvoiceId(savedClaim.getInvoice().getInvoiceId());
-		dto.setCompanyId(savedClaim.getCompany().getCompanyId());
-		dto.setClaimAmount(savedClaim.getClaimAmount());
-		dto.setDiagnosis(savedClaim.getDiagnosis());
-		dto.setTreatmentDetails(savedClaim.getTreatmentDetails());
-		dto.setClaimDate(savedClaim.getClaimDate());
-		dto.setStatus(savedClaim.getStatus());
-		dto.setApprovedDate(savedClaim.getApprovedDate());
-		dto.setRejectionReason(savedClaim.getRejectionReason());
-
-		if (claimDTO.getDocuments() != null) {
-			dto.setDocuments(claimDTO.getDocuments());
-		}
-
-		return dto;
+		return mapToDTO(savedClaim);
 	}
 
 	@Override
@@ -136,6 +119,136 @@ public class ClaimServiceImpl implements IClaimService {
 
 			return new ClaimNotFoundException("Claim not found with ID: " + claimId);
 		});
+
+		return mapToDTO(claim);
+	}
+
+	@Override
+	public List<ClaimDTO> getAllClaims() {
+
+		logger.info("Fetching all claims");
+
+		List<Claim> claims = claimRepository.findAll();
+
+		List<ClaimDTO> dtoList = new ArrayList<>();
+
+		for (Claim claim : claims) {
+
+			dtoList.add(mapToDTO(claim));
+
+		}
+
+		logger.info("Total claims fetched: {}", dtoList.size());
+
+		return dtoList;
+	}
+
+	@Override
+	public List<ClaimDTO> getClaimsByPatientId(Integer patientId) {
+
+		logger.info("Fetching claims for patient {}", patientId);
+
+		List<Claim> claims = claimRepository.findByPatientPatientId(patientId);
+
+		List<ClaimDTO> dtoList = new ArrayList<>();
+
+		for (Claim claim : claims) {
+
+			dtoList.add(mapToDTO(claim));
+
+		}
+
+		logger.info("Total claims found for patient {}: {}", patientId, dtoList.size());
+
+		return dtoList;
+	}
+
+	@Override
+	public List<ClaimDTO> getPendingClaims() {
+
+		logger.info("Fetching pending claims");
+
+		List<Claim> claims = claimRepository.findByStatus("PENDING");
+
+		List<ClaimDTO> dtoList = new ArrayList<>();
+
+		for (Claim claim : claims) {
+
+			dtoList.add(mapToDTO(claim));
+
+		}
+
+		logger.info("Pending claims found: {}", dtoList.size());
+
+		return dtoList;
+	}
+
+	@Override
+	public List<ClaimDTO> getProcessedClaims() {
+
+		logger.info("Fetching processed claims");
+
+		List<Claim> claims = claimRepository.findByStatusIn(List.of("APPROVED", "REJECTED"));
+
+		List<ClaimDTO> dtoList = new ArrayList<>();
+
+		for (Claim claim : claims) {
+
+			dtoList.add(mapToDTO(claim));
+
+		}
+
+		logger.info("Processed claims found: {}", dtoList.size());
+
+		return dtoList;
+	}
+
+	@Override
+	public ClaimDTO approveClaim(Integer claimId) {
+
+		logger.info("Approving claim with id {}", claimId);
+
+		Claim claim = claimRepository.findById(claimId).orElseThrow(() -> {
+
+			logger.warn("Claim not found with id {}", claimId);
+
+			return new ClaimNotFoundException("Claim not found with ID: " + claimId);
+		});
+
+		claim.setStatus("APPROVED");
+		claim.setApprovedDate(LocalDate.now());
+
+		Claim updatedClaim = claimRepository.save(claim);
+
+		logger.info("Claim approved successfully with id {}", updatedClaim.getClaimId());
+
+		return mapToDTO(updatedClaim);
+	}
+
+	@Override
+	public ClaimDTO rejectClaim(Integer claimId, String reason) {
+
+		logger.info("Rejecting claim with id {}", claimId);
+
+		Claim claim = claimRepository.findById(claimId).orElseThrow(() -> {
+
+			logger.warn("Claim not found with id {}", claimId);
+
+			return new ClaimNotFoundException("Claim not found with ID: " + claimId);
+		});
+
+		claim.setStatus("REJECTED");
+		claim.setApprovedDate(null);
+		claim.setRejectionReason(reason);
+
+		Claim updatedClaim = claimRepository.save(claim);
+
+		logger.info("Claim rejected successfully with id {}", updatedClaim.getClaimId());
+
+		return mapToDTO(updatedClaim);
+	}
+
+	private ClaimDTO mapToDTO(Claim claim) {
 
 		ClaimDTO dto = new ClaimDTO();
 
@@ -171,158 +284,4 @@ public class ClaimServiceImpl implements IClaimService {
 		return dto;
 	}
 
-	@Override
-	public List<ClaimDTO> getAllClaims() {
-
-		logger.info("Fetching all claims");
-
-		List<Claim> claims = claimRepository.findAll();
-
-		List<ClaimDTO> dtoList = new ArrayList<>();
-
-		for (Claim claim : claims) {
-
-			ClaimDTO dto = new ClaimDTO();
-
-			dto.setClaimId(claim.getClaimId());
-			dto.setPatientId(claim.getPatient().getPatientId());
-			dto.setInvoiceId(claim.getInvoice().getInvoiceId());
-			dto.setCompanyId(claim.getCompany().getCompanyId());
-			dto.setClaimAmount(claim.getClaimAmount());
-			dto.setDiagnosis(claim.getDiagnosis());
-			dto.setTreatmentDetails(claim.getTreatmentDetails());
-			dto.setClaimDate(claim.getClaimDate());
-			dto.setStatus(claim.getStatus());
-			dto.setApprovedDate(claim.getApprovedDate());
-			dto.setRejectionReason(claim.getRejectionReason());
-
-			List<ClaimDocument> documents = claimDocumentRepository.findByClaimClaimId(claim.getClaimId());
-
-			List<ClaimDocumentDTO> documentDTOs = new ArrayList<>();
-
-			for (ClaimDocument document : documents) {
-
-				ClaimDocumentDTO documentDTO = new ClaimDocumentDTO();
-
-				documentDTO.setDocumentId(document.getDocumentId());
-				documentDTO.setFileName(document.getFileName());
-				documentDTO.setFilePath(document.getFilePath());
-
-				documentDTOs.add(documentDTO);
-			}
-
-			dto.setDocuments(documentDTOs);
-
-			dtoList.add(dto);
-		}
-
-		logger.info("Total claims fetched: {}", dtoList.size());
-
-		return dtoList;
-	}
-
-	@Override
-	public ClaimDTO approveClaim(Integer claimId) {
-
-		logger.info("Approving claim with id {}", claimId);
-
-		Claim claim = claimRepository.findById(claimId).orElseThrow(() -> {
-
-			logger.warn("Claim not found with id {}", claimId);
-
-			return new ClaimNotFoundException("Claim not found with ID: " + claimId);
-		});
-
-		claim.setStatus("APPROVED");
-
-		Claim updatedClaim = claimRepository.save(claim);
-
-		logger.info("Claim approved successfully with id {}", updatedClaim.getClaimId());
-
-		ClaimDTO dto = new ClaimDTO();
-
-		dto.setClaimId(updatedClaim.getClaimId());
-		dto.setPatientId(updatedClaim.getPatient().getPatientId());
-		dto.setInvoiceId(updatedClaim.getInvoice().getInvoiceId());
-		dto.setCompanyId(updatedClaim.getCompany().getCompanyId());
-		dto.setClaimAmount(updatedClaim.getClaimAmount());
-		dto.setDiagnosis(updatedClaim.getDiagnosis());
-		dto.setTreatmentDetails(updatedClaim.getTreatmentDetails());
-		dto.setClaimDate(updatedClaim.getClaimDate());
-		dto.setStatus(updatedClaim.getStatus());
-		dto.setApprovedDate(updatedClaim.getApprovedDate());
-		dto.setRejectionReason(updatedClaim.getRejectionReason());
-
-		List<ClaimDocument> documents = claimDocumentRepository.findByClaimClaimId(updatedClaim.getClaimId());
-
-		List<ClaimDocumentDTO> documentDTOs = new ArrayList<>();
-
-		for (ClaimDocument document : documents) {
-
-			ClaimDocumentDTO documentDTO = new ClaimDocumentDTO();
-
-			documentDTO.setDocumentId(document.getDocumentId());
-			documentDTO.setFileName(document.getFileName());
-			documentDTO.setFilePath(document.getFilePath());
-
-			documentDTOs.add(documentDTO);
-		}
-
-		dto.setDocuments(documentDTOs);
-
-		return dto;
-	}
-
-	@Override
-	public ClaimDTO rejectClaim(Integer claimId, String reason) {
-
-		logger.info("Rejecting claim with id {}", claimId);
-
-		Claim claim = claimRepository.findById(claimId).orElseThrow(() -> {
-
-			logger.warn("Claim not found with id {}", claimId);
-
-			return new ClaimNotFoundException("Claim not found with ID: " + claimId);
-		});
-
-		claim.setStatus("REJECTED");
-		claim.setRejectionReason(reason);
-
-		Claim updatedClaim = claimRepository.save(claim);
-
-		logger.info("Claim rejected successfully with id {}", updatedClaim.getClaimId());
-
-		ClaimDTO dto = new ClaimDTO();
-
-		dto.setClaimId(updatedClaim.getClaimId());
-		dto.setPatientId(updatedClaim.getPatient().getPatientId());
-		dto.setInvoiceId(updatedClaim.getInvoice().getInvoiceId());
-		dto.setCompanyId(updatedClaim.getCompany().getCompanyId());
-		dto.setClaimAmount(updatedClaim.getClaimAmount());
-		dto.setDiagnosis(updatedClaim.getDiagnosis());
-		dto.setTreatmentDetails(updatedClaim.getTreatmentDetails());
-		dto.setClaimDate(updatedClaim.getClaimDate());
-		dto.setStatus(updatedClaim.getStatus());
-		dto.setApprovedDate(updatedClaim.getApprovedDate());
-		dto.setRejectionReason(updatedClaim.getRejectionReason());
-
-		List<ClaimDocument> documents = claimDocumentRepository.findByClaimClaimId(updatedClaim.getClaimId());
-
-		List<ClaimDocumentDTO> documentDTOs = new ArrayList<>();
-
-		for (ClaimDocument document : documents) {
-
-			ClaimDocumentDTO documentDTO = new ClaimDocumentDTO();
-
-			documentDTO.setDocumentId(document.getDocumentId());
-			documentDTO.setFileName(document.getFileName());
-			documentDTO.setFilePath(document.getFilePath());
-
-			documentDTOs.add(documentDTO);
-		}
-
-		dto.setDocuments(documentDTOs);
-
-		return dto;
-	}
 }

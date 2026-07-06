@@ -22,4 +22,8 @@ public class PatientInsuranceDTO {
 	private LocalDate expiryDate;
 	private BigDecimal coverageUsed;
 	private String status;
+	private String planName;
+	private String companyName;
+	private BigDecimal coverageAmount;
+	private BigDecimal premium;
 }

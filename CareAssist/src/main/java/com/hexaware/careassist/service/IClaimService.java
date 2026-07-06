@@ -14,4 +14,10 @@ public interface IClaimService {
 	ClaimDTO approveClaim(Integer claimId);
 
 	ClaimDTO rejectClaim(Integer claimId, String reason);
+	
+	List<ClaimDTO> getClaimsByPatientId(Integer patientId);
+	
+	List<ClaimDTO> getPendingClaims();
+
+	List<ClaimDTO> getProcessedClaims();
 }

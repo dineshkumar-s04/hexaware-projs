@@ -39,7 +39,28 @@ public class InvoiceController {
 
 		return ResponseEntity.ok(invoice);
 	}
+	
+	@GetMapping("/patient/{patientId}")
+	public ResponseEntity<List<InvoiceDTO>> getInvoicesByPatientId(
+	        @PathVariable Integer patientId) {
 
+	    List<InvoiceDTO> invoices =
+	            invoiceService.getInvoicesByPatientId(patientId);
+
+	    return ResponseEntity.ok(invoices);
+	}
+
+	@GetMapping("/provider/{providerId}")
+	public ResponseEntity<List<InvoiceDTO>> getInvoicesByProviderId(
+	        @PathVariable Integer providerId) {
+
+	    List<InvoiceDTO> invoices =
+	            invoiceService.getInvoicesByProviderId(providerId);
+
+	    return ResponseEntity.ok(invoices);
+
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<InvoiceDTO>> getAllInvoices() {
 

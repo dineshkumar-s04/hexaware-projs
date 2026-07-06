@@ -10,8 +10,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hexaware.careassist.dto.UserDTO;
+import com.hexaware.careassist.entity.InsuranceCompany;
+import com.hexaware.careassist.entity.Patient;
+import com.hexaware.careassist.entity.Provider;
 import com.hexaware.careassist.entity.User;
 import com.hexaware.careassist.exception.UserNotFoundException;
+import com.hexaware.careassist.repository.InsuranceCompanyRepository;
+import com.hexaware.careassist.repository.PatientRepository;
+import com.hexaware.careassist.repository.ProviderRepository;
 import com.hexaware.careassist.repository.UserRepository;
 import com.hexaware.careassist.service.IUserService;
 
@@ -26,6 +32,15 @@ public class UserServiceImpl implements IUserService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private PatientRepository patientRepository;
+
+	@Autowired
+	private ProviderRepository providerRepository;
+
+	@Autowired
+	private InsuranceCompanyRepository insuranceCompanyRepository;
 
 	@Override
 	public UserDTO registerUser(UserDTO userDTO) {
@@ -43,6 +58,36 @@ public class UserServiceImpl implements IUserService {
 	    user.setProfilePic(userDTO.getProfilePic());
 
 	    User savedUser = userRepository.save(user);
+	    
+	    if ("PATIENT".equalsIgnoreCase(savedUser.getRole())) {
+
+	        Patient patient = new Patient();
+
+	        patient.setUser(savedUser);
+
+	        patientRepository.save(patient);
+
+	    }
+
+	    else if ("PROVIDER".equalsIgnoreCase(savedUser.getRole())) {
+
+	        Provider provider = new Provider();
+
+	        provider.setUser(savedUser);
+
+	        providerRepository.save(provider);
+
+	    }
+
+	    else if ("INSURANCE".equalsIgnoreCase(savedUser.getRole())) {
+
+	        InsuranceCompany company = new InsuranceCompany();
+
+	        company.setUser(savedUser);
+
+	        insuranceCompanyRepository.save(company);
+
+	    }
 	    
 	    logger.info("User registered successfully with id {}", savedUser.getUserId());
 

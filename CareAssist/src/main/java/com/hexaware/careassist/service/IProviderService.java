@@ -15,4 +15,6 @@ public interface IProviderService {
                                ProviderDTO providerDTO);
 
     void deleteProvider(Integer providerId);
+    
+    ProviderDTO getProviderByEmail(String email);
 }

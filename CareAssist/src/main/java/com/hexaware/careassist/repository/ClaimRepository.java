@@ -10,6 +10,10 @@ import com.hexaware.careassist.entity.Claim;
 @Repository
 public interface ClaimRepository extends JpaRepository<Claim, Integer> {
 
-	List<Claim> findByStatus(String status);
+    List<Claim> findByPatientPatientId(Integer patientId);
+
+    List<Claim> findByStatus(String status);
+
+    List<Claim> findByStatusIn(List<String> statuses);
 
 }

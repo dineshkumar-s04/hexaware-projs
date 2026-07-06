@@ -46,6 +46,16 @@ public class PatientInsuranceController {
 
 		return ResponseEntity.ok(enrollments);
 	}
+	
+	@GetMapping("/patient/{patientId}")
+	public ResponseEntity<List<PatientInsuranceDTO>> getEnrollmentsByPatientId(
+	        @PathVariable Integer patientId) {
+
+	    List<PatientInsuranceDTO> enrollments =
+	            patientInsuranceService.getEnrollmentsByPatientId(patientId);
+
+	    return ResponseEntity.ok(enrollments);
+	}
 
 	@DeleteMapping("/{enrollmentId}")
 	public ResponseEntity<String> cancelEnrollment(@PathVariable Integer enrollmentId) {

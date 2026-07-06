@@ -47,6 +47,15 @@ public class ClaimController {
 
 		return ResponseEntity.ok(claims);
 	}
+	
+	@GetMapping("/patient/{patientId}")
+	public ResponseEntity<List<ClaimDTO>> getClaimsByPatientId(
+	        @PathVariable Integer patientId) {
+
+	    List<ClaimDTO> claims = claimService.getClaimsByPatientId(patientId);
+
+	    return ResponseEntity.ok(claims);
+	}
 
 	@PutMapping("/approve/{claimId}")
 	public ResponseEntity<ClaimDTO> approveClaim(@PathVariable Integer claimId) {
@@ -62,5 +71,15 @@ public class ClaimController {
 		ClaimDTO rejectedClaim = claimService.rejectClaim(claimId, reason);
 
 		return ResponseEntity.ok(rejectedClaim);
+	}
+	
+	@GetMapping("/pending")
+	public ResponseEntity<List<ClaimDTO>> getPendingClaims() {
+	    return ResponseEntity.ok(claimService.getPendingClaims());
+	}
+
+	@GetMapping("/processed")
+	public ResponseEntity<List<ClaimDTO>> getProcessedClaims() {
+	    return ResponseEntity.ok(claimService.getProcessedClaims());
 	}
 }

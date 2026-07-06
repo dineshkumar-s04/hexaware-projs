@@ -7,5 +7,6 @@ import com.hexaware.careassist.entity.Provider;
 
 @Repository
 public interface ProviderRepository extends JpaRepository<Provider, Integer> {
+	Provider findByUserEmail(String email);
 
 }

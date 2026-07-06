@@ -2,6 +2,8 @@ package com.hexaware.careassist.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,10 +59,10 @@ public class PatientInsuranceServiceImpl implements IPatientInsuranceService {
 
 		enrollment.setPatient(patient);
 		enrollment.setPlan(plan);
-		enrollment.setEnrollmentDate(dto.getEnrollmentDate());
-		enrollment.setExpiryDate(dto.getExpiryDate());
-		enrollment.setCoverageUsed(dto.getCoverageUsed());
-		enrollment.setStatus(dto.getStatus());
+		enrollment.setEnrollmentDate(LocalDate.now());
+		enrollment.setExpiryDate(LocalDate.now().plusYears(1));
+		enrollment.setCoverageUsed(BigDecimal.ZERO);
+		enrollment.setStatus("ACTIVE");
 
 		PatientInsurance savedEnrollment = patientInsuranceRepository.save(enrollment);
 
@@ -96,6 +98,17 @@ public class PatientInsuranceServiceImpl implements IPatientInsuranceService {
 		dto.setEnrollmentId(enrollment.getEnrollmentId());
 		dto.setPatientId(enrollment.getPatient().getPatientId());
 		dto.setPlanId(enrollment.getPlan().getPlanId());
+		dto.setPlanName(enrollment.getPlan().getPlanName());
+
+		dto.setCoverageAmount(enrollment.getPlan().getCoverageAmount());
+
+		dto.setPremium(enrollment.getPlan().getPremium());
+
+		dto.setCompanyName(
+		    enrollment.getPlan()
+		              .getCompany()
+		              .getCompanyName()
+		);
 		dto.setEnrollmentDate(enrollment.getEnrollmentDate());
 		dto.setExpiryDate(enrollment.getExpiryDate());
 		dto.setCoverageUsed(enrollment.getCoverageUsed());
@@ -120,6 +133,17 @@ public class PatientInsuranceServiceImpl implements IPatientInsuranceService {
 			dto.setEnrollmentId(enrollment.getEnrollmentId());
 			dto.setPatientId(enrollment.getPatient().getPatientId());
 			dto.setPlanId(enrollment.getPlan().getPlanId());
+			dto.setPlanName(enrollment.getPlan().getPlanName());
+
+			dto.setCoverageAmount(enrollment.getPlan().getCoverageAmount());
+
+			dto.setPremium(enrollment.getPlan().getPremium());
+
+			dto.setCompanyName(
+			    enrollment.getPlan()
+			              .getCompany()
+			              .getCompanyName()
+			);
 			dto.setEnrollmentDate(enrollment.getEnrollmentDate());
 			dto.setExpiryDate(enrollment.getExpiryDate());
 			dto.setCoverageUsed(enrollment.getCoverageUsed());
@@ -131,6 +155,47 @@ public class PatientInsuranceServiceImpl implements IPatientInsuranceService {
 		logger.info("Total enrollments fetched: {}", dtoList.size());
 
 		return dtoList;
+	}
+	
+	@Override
+	public List<PatientInsuranceDTO> getEnrollmentsByPatientId(Integer patientId) {
+
+	    logger.info("Fetching enrollments for patient {}", patientId);
+
+	    List<PatientInsurance> enrollments =
+	            patientInsuranceRepository.findByPatientPatientId(patientId);
+
+	    List<PatientInsuranceDTO> dtoList = new ArrayList<>();
+
+	    for (PatientInsurance enrollment : enrollments) {
+
+	        PatientInsuranceDTO dto = new PatientInsuranceDTO();
+
+	        dto.setEnrollmentId(enrollment.getEnrollmentId());
+	        dto.setPatientId(enrollment.getPatient().getPatientId());
+	        dto.setPlanId(enrollment.getPlan().getPlanId());
+	        dto.setPlanName(enrollment.getPlan().getPlanName());
+
+	        dto.setCoverageAmount(enrollment.getPlan().getCoverageAmount());
+
+	        dto.setPremium(enrollment.getPlan().getPremium());
+
+	        dto.setCompanyName(
+	            enrollment.getPlan()
+	                      .getCompany()
+	                      .getCompanyName()
+	        );
+	        dto.setEnrollmentDate(enrollment.getEnrollmentDate());
+	        dto.setExpiryDate(enrollment.getExpiryDate());
+	        dto.setCoverageUsed(enrollment.getCoverageUsed());
+	        dto.setStatus(enrollment.getStatus());
+
+	        dtoList.add(dto);
+	    }
+
+	    logger.info("Total enrollments found for patient {}: {}", patientId, dtoList.size());
+
+	    return dtoList;
 	}
 
 	@Override

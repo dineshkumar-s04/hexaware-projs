@@ -14,4 +14,7 @@ public interface IPatientInsuranceService {
     List<PatientInsuranceDTO> getAllEnrollments();
 
     void cancelEnrollment(Integer enrollmentId);
+    
+    List<PatientInsuranceDTO> getEnrollmentsByPatientId(
+            Integer patientId);
 }

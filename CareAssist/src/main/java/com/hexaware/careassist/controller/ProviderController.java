@@ -56,6 +56,15 @@ public class ProviderController {
 
 		return ResponseEntity.ok(updatedProvider);
 	}
+	
+	@GetMapping("/email/{email}")
+	public ResponseEntity<ProviderDTO> getProviderByEmail(
+	        @PathVariable String email) {
+
+	    ProviderDTO provider = providerService.getProviderByEmail(email);
+
+	    return ResponseEntity.ok(provider);
+	}
 
 	@DeleteMapping("/{providerId}")
 	public ResponseEntity<String> deleteProvider(@PathVariable Integer providerId) {

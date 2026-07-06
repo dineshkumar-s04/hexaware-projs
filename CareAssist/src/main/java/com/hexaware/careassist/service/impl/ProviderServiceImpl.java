@@ -173,4 +173,25 @@ public class ProviderServiceImpl implements IProviderService {
 
 		logger.info("Provider deleted successfully with id {}", providerId);
 	}
+	
+	@Override
+	public ProviderDTO getProviderByEmail(String email) {
+
+	    Provider provider = providerRepository.findByUserEmail(email);
+
+	    if (provider == null) {
+	        throw new ProviderNotFoundException("Provider not found");
+	    }
+
+	    ProviderDTO dto = new ProviderDTO();
+
+	    dto.setProviderId(provider.getProviderId());
+	    dto.setUserId(provider.getUser().getUserId());
+	    dto.setHospitalName(provider.getHospitalName());
+	    dto.setLicenseNumber(provider.getLicenseNumber());
+	    dto.setSpecialization(provider.getSpecialization());
+	    dto.setAddress(provider.getAddress());
+
+	    return dto;
+	}
 }

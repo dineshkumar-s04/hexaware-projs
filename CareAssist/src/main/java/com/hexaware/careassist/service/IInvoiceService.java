@@ -12,10 +12,15 @@ public interface IInvoiceService {
             Integer invoiceId);
 
     List<InvoiceDTO> getAllInvoices();
+    
+    List<InvoiceDTO> getInvoicesByPatientId(
+            Integer patientId);
 
     InvoiceDTO updateInvoiceStatus(
             Integer invoiceId,
             String status);
 
     void deleteInvoice(Integer invoiceId);
+    
+    List<InvoiceDTO> getInvoicesByProviderId(Integer providerId);
 }
